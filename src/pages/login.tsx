@@ -3,6 +3,23 @@ import atlantis from "~/../public/atlantis1.jpg";
 import Layout from "~/pages/_layout";
 
 const Login = () => {
+  // gets values from sign in form and submits them
+  const handleFormSubmit = (event: React.SyntheticEvent): void => {
+    event.preventDefault();
+    const target = event.target as typeof event.target & {
+      email: { value: string };
+      password: { value: string };
+    };
+    const email: string = target.email.value;
+    const password: string = target.password.value;
+    console.log(email);
+    console.log(password);
+    // TODO:
+    // Hash Details and Send to Login Api Route
+    // Validate Details
+    // Update user session data
+  };
+
   return (
     <Layout>
       {/* Background Image and Fill Color */}
@@ -16,12 +33,19 @@ const Login = () => {
       {/* Sign up Header Section */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 backdrop-blur-sm lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white/80">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white/90">
             Sign in to your account
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          {/* Sign Up Form */}
+          <form
+            className="space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={handleFormSubmit}
+          >
+            {/* Username Input Field */}
             <div>
               <label
                 htmlFor="email"
@@ -41,7 +65,7 @@ const Login = () => {
                 />
               </div>
             </div>
-
+            {/* Password Input Field */}
             <div>
               <div className="flex items-center justify-between drop-shadow-md">
                 <label
@@ -73,7 +97,7 @@ const Login = () => {
                 />
               </div>
             </div>
-
+            {/* Submit Button */}
             <div>
               <button
                 type="submit"
@@ -83,7 +107,7 @@ const Login = () => {
               </button>
             </div>
           </form>
-
+          {/* Sign Up Details */}
           <p className="mt-10 text-center text-base text-white/80">
             Not a member yet?{" "}
             <a
