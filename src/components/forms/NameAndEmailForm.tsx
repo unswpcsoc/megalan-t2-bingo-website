@@ -44,13 +44,14 @@ const NameAndEmailForm = ({ onChange }: { onChange: CallableFunction }) => {
     <>
       {/* Email Submission Form */}
       <form id="email-form" className="space-y-6" onSubmit={handleFormSubmit}>
-        {/* Name Input Section */}
+        {/* Information box */}
         <div className="flex flex-row space-x-2 rounded-lg border px-2 py-2">
           <InformationCircleIcon className="my-auto h-6 w-6 flex-shrink-0 text-white" />
           <h1 className="text-white/80">
             Please Use Details Used for your Megalan Ticket Here.
           </h1>
         </div>
+        {/* Name Input Section */}
         <div>
           <label
             htmlFor="email"
@@ -58,7 +59,7 @@ const NameAndEmailForm = ({ onChange }: { onChange: CallableFunction }) => {
           >
             Name
             <span className="float-right inline text-sm">
-              (max 15 characters)
+              (max 20 characters)
             </span>
           </label>
           <div className="mt-2">
@@ -68,7 +69,7 @@ const NameAndEmailForm = ({ onChange }: { onChange: CallableFunction }) => {
               name="name"
               type="text"
               autoComplete="given-name"
-              maxLength={15}
+              maxLength={20}
               required
               className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-400/80 sm:text-sm sm:leading-6"
             />
