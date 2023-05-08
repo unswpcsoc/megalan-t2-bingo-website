@@ -31,6 +31,7 @@ export const authenticationRouter = createTRPCRouter({
         where: { userId: user.id },
         data: { expires: new Date(Date.now() + 1000 * 60 * 60 * 24)},
       })
+      
       // if old session exists return the token
       if (oldSession) return {
         found: true,
