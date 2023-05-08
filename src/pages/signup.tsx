@@ -2,8 +2,6 @@ import { useState } from "react";
 import Layout from "./_layout";
 import atlantis from "public/images/atlantis1.jpg";
 import Image from "next/image";
-
-// import { api } from "~/utils/api";
 import { hash } from "~/components/functions/hash";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import NameAndEmailForm from "~/components/forms/NameAndEmailForm";
