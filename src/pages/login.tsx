@@ -1,9 +1,14 @@
 import Image from "next/image";
 import atlantis from "~/../public/atlantis1.jpg";
 import Layout from "~/pages/_layout";
+import Link from "next/link";
+import { hash } from "./api/auth/[hash]";
+// import { api } from "~/utils/api";
 
 const Login = () => {
   // gets values from sign in form and submits them
+  // const { mutate: login } = api.login.loginUser.useMutation();
+
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
@@ -11,9 +16,11 @@ const Login = () => {
       password: { value: string };
     };
     const email: string = target.email.value;
-    const password: string = target.password.value;
-    console.log(email);
-    console.log(password);
+    const password: string = hash(target.password.value);
+    console.log(email, password);
+    // hash(password);
+    // console.log(login({ email, password }));
+
     // TODO:
     // Hash Details and Send to Login Api Route
     // Validate Details
@@ -21,7 +28,7 @@ const Login = () => {
   };
 
   return (
-    <Layout>
+    <>
       {/* Background Image and Fill Color */}
       <div className="absolute -z-50 h-full w-full bg-sky-800">
         <Image
@@ -31,7 +38,7 @@ const Login = () => {
         />
       </div>
       {/* Sign up Header Section */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 backdrop-blur-sm lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 backdrop-blur-[2px] lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white/90">
             Sign in to your account
@@ -101,7 +108,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-teal-400/80 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-teal-500/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600/80"
+                className="flex w-full justify-center rounded-md bg-teal-400/80 px-3 py-2 text-base font-semibold leading-6 text-white shadow-sm hover:bg-teal-500/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600/80"
               >
                 Sign in
               </button>
@@ -110,16 +117,16 @@ const Login = () => {
           {/* Sign Up Details */}
           <p className="mt-10 text-center text-base text-white/80">
             Not a member yet?{" "}
-            <a
-              href="#"
+            <Link
+              href="/signup"
               className="font-semibold leading-6 text-teal-400/80 hover:text-teal-200/80"
             >
               Sign Up!
-            </a>
+            </Link>
           </p>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 export default Login;
