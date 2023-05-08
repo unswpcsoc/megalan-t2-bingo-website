@@ -4,28 +4,38 @@ import atlantis from "~/public/images/atlantis1.jpg";
 import Link from "next/link";
 import { hash } from "~/components/functions/hash";
 import Layout from "./_layout";
-// import { api } from "~/utils/api";
+import { api } from "~/utils/api";
+import { useState } from "react";
 
 const Login = () => {
-  // gets values from sign in form and submits them
-  // const { mutate: login } = api.login.loginUser.useMutation();
-
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+  const [formSent, setFormSent] = useState(false);
+  // api mutation for login
+  const loginMutation = api.auth.login.useMutation();
+  // accepts user details from sign in form and logs in user
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
+    // defines form inputs
     const target = event.target as typeof event.target & {
       email: { value: string };
       password: { value: string };
     };
     const email: string = target.email.value;
     const password: string = hash(target.password.value);
-    console.log(email, password);
-    // hash(password);
-    // console.log(login({ email, password }));
-
-    // TODO:
-    // Hash Details and Send to Login Api Route
-    // Validate Details
-    // Update user session data
+    loginMutation
+      .mutateAsync({ email, password })
+      .then((res) => {
+        if (!res.found) setValidEmail(false); // if invalid email
+        if (!res.passwordMatch) setValidPassword(false); // if invalid password
+        setFormSent(true);
+        // TODO: redirect to home page
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("Experienced error while logging in");
+        setFormSent(false);
+      });
   };
 
   return (
@@ -72,6 +82,12 @@ const Login = () => {
                   className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-400/80 sm:text-sm sm:leading-6"
                 />
               </div>
+              {/* Invalid Email Error */}
+              {!validEmail && formSent && (
+                <p className="text-sm font-normal text-red-400">
+                  *Account with this email not found.
+                </p>
+              )}
             </div>
             {/* Password Input Field */}
             <div>
@@ -104,6 +120,12 @@ const Login = () => {
                   className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-400/80 sm:text-sm sm:leading-6"
                 />
               </div>
+              {/* Incorrect Password Error */}
+              {!validPassword && formSent && (
+                <p className="text-sm font-normal text-red-400">
+                  *Wrong Password
+                </p>
+              )}
             </div>
             {/* Submit Button */}
             <div>

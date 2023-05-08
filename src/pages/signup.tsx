@@ -7,41 +7,36 @@ import Image from "next/image";
 import { hash } from "~/components/functions/hash";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import NameAndEmailForm from "~/components/forms/NameAndEmailForm";
+import { api } from "~/utils/api";
 
 const SignUp = () => {
-  // has email input
-  // checks if account already exists with email
-  // enter password input
-  // re-enter password input
-  // submit form data
-  // hash details
-  // send thru api
-  // send user a validation link in gmail
-  // check if validation link clicked
-  // re-direct to login page
-
-  // stores current user details
+  // store current user details in state
   const [hasValidEmail, setHasValidEmail] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [currentEmail, setCurrentEmail] = useState("");
   const [currentName, setCurrentName] = useState("");
-  // sign up user api
-  // const { mutate: signUp } = api.user.createUser.useMutation();
-
+  // api mutation for sign up
+  const signUpMutation = api.auth.signup.useMutation();
   // submits form to create new user account and sends validation email
   const handleUserDetailsSubmit = () => {
-    // send validate
-    // send the hashed login details to api
+    // hash password
     const hashedPassword = hash(currentPassword);
-    console.log(currentName);
-    console.log(currentEmail);
-    console.log(hashedPassword);
-    console.log(currentPassword);
-    // signUp({
-    //   name: currentName,
-    //   email: currentEmail,
-    //   password: hashedPassword,
-    // });
+    // api request to create new user account
+    signUpMutation
+      .mutateAsync({
+        email: currentEmail,
+        password: hashedPassword,
+        name: currentName,
+      })
+      .then((res) => {
+        console.log(res.status);
+        // TODO: if (res.status) send validation email with numbers
+        // enter numbers to verify email
+        // redirect to home page
+      })
+      .catch(() => {
+        console.log("Experienced error while signing up");
+      });
   };
 
   return (
@@ -69,7 +64,7 @@ const SignUp = () => {
         </div>
         {/* Sign Up Forms */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* Display Email or Password Form Based on Progress */}
+          {/* Display Email or Password Form Based on Sign up progress */}
           {!hasValidEmail ? (
             <NameAndEmailForm
               onChange={(value: { email: string; name: string }) => {
