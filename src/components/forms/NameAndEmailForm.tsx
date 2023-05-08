@@ -2,12 +2,17 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { api } from "~/utils/api";
 
+/**
+ * Form that accepts user name and email and send to parent through onChange()
+ */
 const NameAndEmailForm = ({ onChange }: { onChange: CallableFunction }) => {
+  // for displaying errors only after submitting form
   const [validName, setValidName] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [formSent, setFormSent] = useState(false);
-  // api mutation
-  // const checkIfUserExistsMutation = api.validate.checkIfUnique.useMutation();
+  // api to validate user detail's uniqueness mutation
+  const isUserUniqueMutation = api.validate.isUserUnique.useMutation();
+  // function to submit form only if details are valid
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
@@ -16,24 +21,24 @@ const NameAndEmailForm = ({ onChange }: { onChange: CallableFunction }) => {
     };
     const email: string = target.email.value;
     const name: string = target.name.value;
-    onChange({ name: name, email: email });
-    // checks if email and name already exist
-    // checkIfUserExistsMutation
-    //   .mutateAsync({
-    //     name: name,
-    //     email: email,
-    //   })
-    //   .then((res) => {
-    //     // TODO: Check If Email Is In Megalan Ticket DB
-    //     if (!res.name) setValidName(true);
-    //     if (!res.email) setValidEmail(true);
-    //     if (!res.found) onChange({ name: name, email: email });
-    //     setFormSent(true);
-    //   })
-    //   .catch(() => {
-    //     console.log("Experienced Error while validating email");
-    //     setFormSent(false);
-    //   });
+    // checks if email and name are unique
+    isUserUniqueMutation
+      .mutateAsync({
+        name: name,
+        email: email,
+      })
+      .then((res) => {
+        // TODO: Check If Email Is In Megalan Ticket DB
+        setValidName(!res.name);
+        setValidEmail(!res.email);
+        // if no other users are found with same details send details to parent
+        if (!res.found) onChange({ name: name, email: email });
+        setFormSent(true);
+      })
+      .catch(() => {
+        console.log("Experienced Error while validating email");
+        setFormSent(false);
+      });
   };
   return (
     <>
