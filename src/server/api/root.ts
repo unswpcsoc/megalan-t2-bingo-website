@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { userRouter } from "~/server/api/routers/user";
-import { validationRouter } from "./routers/validate";
+import { exampleRouter } from "~/server/api/routers/example";
+import { validateRouter } from "./routers/validate";
+import { authenticationRouter } from "./routers/authentication";
 
 /**
  * This is the primary router for your server.
@@ -8,8 +9,9 @@ import { validationRouter } from "./routers/validate";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  user: userRouter,
-  validate: validationRouter
+  example: exampleRouter,
+  validate: validateRouter,
+  auth: authenticationRouter
 });
 
 // export type definition of API
