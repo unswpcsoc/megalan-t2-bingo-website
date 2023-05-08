@@ -1,5 +1,5 @@
 import Image from "next/image";
-import atlantis from "~/../public/images/atlantis1.jpg";
+import atlantis from "~/public/images/atlantis1.jpg";
 // import Layout from "~/pages/_layout";
 import Link from "next/link";
 import { hash } from "~/components/functions/hash";
