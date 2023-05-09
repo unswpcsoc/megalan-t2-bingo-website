@@ -1,5 +1,5 @@
 import Image from "next/image";
-import atlantis from "~/public/images/atlantis1.jpg";
+import atlantis from "public/images/atlantis1.jpg";
 // import Layout from "~/pages/_layout";
 import Link from "next/link";
 import { hash } from "~/components/functions/hash";
@@ -43,6 +43,7 @@ const Login = () => {
       {/* Background Image and Fill Color */}
       <div className="absolute -z-50 h-full w-full bg-sky-800">
         <Image
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           src={atlantis}
           alt="atlantis"
           className="relative -z-30 h-screen w-full bg-center object-cover opacity-60 "

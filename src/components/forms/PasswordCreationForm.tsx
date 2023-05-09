@@ -26,10 +26,11 @@ const PasswordCreationForm = ({
     // if passwords match, hash it and send through onChange() to parent
     if (password === confirmedPassword) {
       setMatchingPassword(true);
-      onChange(hash(password));
+      return onChange(hash(password));
+    } else {
+      // if passwords do not match set flag to display error message
+      setMatchingPassword(false);
     }
-    // if passwords do not match set flag to display error message
-    setMatchingPassword(false);
     setFormSent(true);
   };
   return (
