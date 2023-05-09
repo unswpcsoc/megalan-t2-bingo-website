@@ -2,40 +2,90 @@ import { useState } from "react";
 import Layout from "./_layout";
 import atlantis from "public/images/atlantis1.jpg";
 import Image from "next/image";
-
-// import { api } from "~/utils/api";
 import { hash } from "~/components/functions/hash";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import NameAndEmailForm from "~/components/forms/NameAndEmailForm";
 import { api } from "~/utils/api";
+import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
+  const router = useRouter();
   // store current user details in state
-  const [hasValidEmail, setHasValidEmail] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [currentEmail, setCurrentEmail] = useState("");
   const [currentName, setCurrentName] = useState("");
-  // api mutation for sign up
+  // flags for displaying forms
+  const [hasValidEmail, setHasValidEmail] = useState(false);
+  const [showVerifyCodeForm, setShowVerifyCodeForm] = useState(false);
+  const [currentVerificationCode, setCurrentVerificationCode] = useState("");
+  // api mutation for sign up and for sending verification code to email
   const signUpMutation = api.auth.signup.useMutation();
-  // submits form to create new user account and sends validation email
-  const handleUserDetailsSubmit = () => {
-    // hash password
-    const hashedPassword = hash(currentPassword);
-    // api request to create new user account
+  const verifyMutation = api.validate.sendVerificationCode.useMutation();
+  const showCorrectForm = () => {
+    if (!hasValidEmail) {
+      return (
+        <NameAndEmailForm
+          onChange={(value: { email: string; name: string }) => {
+            setCurrentEmail(value.email);
+            setCurrentName(value.name);
+            setHasValidEmail(true);
+          }}
+        />
+      );
+    } else if (hasValidEmail && !showVerifyCodeForm) {
+      return (
+        <PasswordCreationForm
+          onChange={(value) => {
+            setCurrentPassword(value);
+            doVerification();
+          }}
+        />
+      );
+    } else {
+      return (
+        <VerificationCodeForm
+          code={currentVerificationCode}
+          onChange={async (res: { verified: boolean }) => {
+            if (res.verified) await createUser();
+            if (!res.verified) doVerification();
+          }}
+        />
+      );
+    }
+  };
+
+  // sign up user which creates a new user account
+  const createUser = async () => {
     signUpMutation
       .mutateAsync({
         email: currentEmail,
-        password: hashedPassword,
+        password: currentPassword,
         name: currentName,
       })
       .then((res) => {
-        console.log(res.status);
-        // TODO: if (res.status) send validation email with numbers
-        // enter numbers to verify email
-        // redirect to home page
+        if (res.status) console.log(res.message); // redirect to login page
       })
       .catch(() => {
         console.log("Experienced error while signing up");
+      });
+    // redirect to user home page
+    await router.push("/bingo");
+  };
+
+  const doVerification = () => {
+    // send verification code to email and display verification form
+    setShowVerifyCodeForm(true);
+    verifyMutation
+      .mutateAsync({
+        name: currentName,
+        email: currentEmail,
+      })
+      .then((res) => {
+        setCurrentVerificationCode(res.code);
+      })
+      .catch(() => {
+        console.log("Experienced Error while sending verification code");
       });
   };
 
@@ -44,6 +94,7 @@ const SignUp = () => {
       {/* Background Image and Fill Color */}
       <div className="absolute -z-50 h-full w-full bg-sky-800">
         <Image
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           src={atlantis}
           alt="atlantis"
           className="relative -z-30 h-screen w-full bg-center object-cover opacity-60 "
@@ -64,23 +115,8 @@ const SignUp = () => {
         </div>
         {/* Sign Up Forms */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* Display Email or Password Form Based on Sign up progress */}
-          {!hasValidEmail ? (
-            <NameAndEmailForm
-              onChange={(value: { email: string; name: string }) => {
-                setCurrentEmail(value.email);
-                setCurrentName(value.name);
-                setHasValidEmail(true);
-              }}
-            />
-          ) : (
-            <PasswordCreationForm
-              onChange={(value) => {
-                setCurrentPassword(value);
-                handleUserDetailsSubmit();
-              }}
-            />
-          )}
+          {/* Display Email or Password or Verification Form Based on Sign up progress */}
+          {showCorrectForm()}
         </div>
       </div>
     </Layout>

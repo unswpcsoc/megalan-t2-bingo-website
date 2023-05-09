@@ -5,6 +5,7 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
+import { SendVerificationEmail } from "./verificationEmail";
 
 export const validateRouter = createTRPCRouter({
   isUserUnique: publicProcedure
@@ -31,6 +32,12 @@ export const validateRouter = createTRPCRouter({
     return ctx.prisma.example.findMany();
   }),
 
+  sendVerificationCode: publicProcedure
+  .input(z.object({ email: z.string().email(), name: z.string() }))
+  .mutation(({ input }): {status: boolean, code: string} => {
+    const res = SendVerificationEmail(input.email, input.name);
+    return { status: res.status, code: res.code };
+  }),
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
