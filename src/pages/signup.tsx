@@ -2,14 +2,14 @@ import { useState } from "react";
 import Layout from "./_layout";
 import atlantis from "public/images/atlantis1.jpg";
 import Image from "next/image";
-import { hash } from "~/components/functions/hash";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import NameAndEmailForm from "~/components/forms/NameAndEmailForm";
 import { api } from "~/utils/api";
 import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
 import { useRouter } from "next/router";
+import { type NextPage } from "next/types";
 
-const SignUp = () => {
+const SignUp: NextPage = () => {
   const router = useRouter();
   // store current user details in state
   const [currentPassword, setCurrentPassword] = useState("");
@@ -91,16 +91,7 @@ const SignUp = () => {
 
   return (
     <Layout>
-      {/* Background Image and Fill Color */}
-      <div className="absolute -z-50 h-full w-full bg-sky-800">
-        <Image
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          src={atlantis}
-          alt="atlantis"
-          className="relative -z-30 h-screen w-full bg-center object-cover opacity-60 "
-        />
-      </div>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 backdrop-blur-[2px] lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         {/* Create Account Header Section */}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           {!hasValidEmail ? (
