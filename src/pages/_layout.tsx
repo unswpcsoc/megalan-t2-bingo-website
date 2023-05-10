@@ -17,12 +17,12 @@ const Layout = ({ children }: LayoutProps) => {
       </Head>
       <div className="h-full w-full">
         {/* Background Image and Colour Fill */}
-        <div className="absolute -z-50 min-h-full w-full bg-sky-800 blur-[2px]">
+        <div className="fixed -z-50 min-h-full w-full bg-sky-800 blur-[2px]">
           <Image
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             src={atlantis}
             alt="atlantis"
-            className="relative -z-30 min-h-screen w-full bg-center object-cover opacity-60"
+            className="fixed -z-30 min-h-screen w-full bg-center object-cover opacity-60"
           />
         </div>
         <Header />
