@@ -1,13 +1,13 @@
 import Image from "next/image";
 import atlantis from "public/images/atlantis1.jpg";
-// import Layout from "~/pages/_layout";
 import Link from "next/link";
 import { hash } from "~/components/functions/hash";
 import Layout from "./_layout";
 import { api } from "~/utils/api";
 import { useState } from "react";
+import { type NextPage } from "next/types";
 
-const Login = () => {
+const Login: NextPage = () => {
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [formSent, setFormSent] = useState(false);
@@ -40,17 +40,8 @@ const Login = () => {
 
   return (
     <Layout>
-      {/* Background Image and Fill Color */}
-      <div className="absolute -z-50 h-full w-full bg-sky-800">
-        <Image
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          src={atlantis}
-          alt="atlantis"
-          className="relative -z-30 h-screen w-full bg-center object-cover opacity-60 "
-        />
-      </div>
       {/* Sign up Header Section */}
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 backdrop-blur-[2px] lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white/90">
             Sign in to your account
@@ -92,7 +83,7 @@ const Login = () => {
             </div>
             {/* Password Input Field */}
             <div>
-              <div className="flex items-center justify-between drop-shadow-md">
+              <div className="z-0 flex items-center justify-between drop-shadow-md">
                 <label
                   htmlFor="password"
                   className="block text-base font-medium leading-6 text-white/80"
