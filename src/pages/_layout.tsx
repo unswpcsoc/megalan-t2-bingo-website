@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "~/components/universal/header";
+import Header from "~/components/universal/Header";
 import Image from "next/image";
 import atlantis from "public/images/atlantis1.jpg";
 
