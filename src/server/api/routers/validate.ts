@@ -38,6 +38,7 @@ export const validateRouter = createTRPCRouter({
     const res = SendVerificationEmail(input.email, input.name);
     return { status: res.status, code: res.code };
   }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),

@@ -1,6 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { api } from "~/utils/api";
 
 const VerificationCodeForm = ({
   code,
@@ -19,13 +18,13 @@ const VerificationCodeForm = ({
     };
     const enteredCode: string = target.code.value;
     if (resend) {
-      onChange({ verified: false });
+      onChange(false);
       setResend(false);
       return;
     }
     if (enteredCode !== code) setIsVerified(false);
     if (enteredCode === code) {
-      onChange({ verified: true });
+      onChange(true);
       return;
     }
     setFormSent(true);

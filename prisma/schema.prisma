@@ -20,6 +20,15 @@ model Example {
     updatedAt DateTime @updatedAt
 }
 
+model Tasks {
+    id             String @id @default(cuid())
+    society        String
+    name           String @db.Text
+    points         Int    @default(100)
+    societyId      String @unique
+    completedUsers User[]
+}
+
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -57,6 +66,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    tasksId       String?
+    Tasks         Tasks?    @relation(fields: [tasksId], references: [id])
 }
 
 model VerificationToken {

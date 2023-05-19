@@ -1,20 +1,18 @@
-import Image from "next/image";
-import atlantis from "public/images/atlantis1.jpg";
 import Link from "next/link";
 import { hash } from "~/components/functions/hash";
-import Layout from "./_layout";
-import { api } from "~/utils/api";
+import Layout from "../_layout";
 import { useState } from "react";
 import { type NextPage } from "next/types";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 const Login: NextPage = () => {
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [formSent, setFormSent] = useState(false);
-  // api mutation for login
-  const loginMutation = api.auth.login.useMutation();
+  const router = useRouter();
   // accepts user details from sign in form and logs in user
-  const handleFormSubmit = (event: React.SyntheticEvent): void => {
+  const handleFormSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     // defines form inputs
     const target = event.target as typeof event.target & {
@@ -23,19 +21,28 @@ const Login: NextPage = () => {
     };
     const email: string = target.email.value;
     const password: string = hash(target.password.value);
-    loginMutation
-      .mutateAsync({ email, password })
-      .then((res) => {
-        if (!res.found) setValidEmail(false); // if invalid email
-        if (!res.passwordMatch) setValidPassword(false); // if invalid password
-        setFormSent(true);
-        // TODO: redirect to home page
+    // sign in user with next-auth
+    signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    })
+      .then(async (res) => {
+        res?.error === "user not found"
+          ? setValidEmail(false)
+          : setValidEmail(true);
+        res?.error === "wrong password"
+          ? setValidPassword(false)
+          : setValidPassword(true);
+        if (res?.ok) await router.push("/bingo");
       })
       .catch((err) => {
-        console.log(err);
-        console.log("Experienced error while logging in");
-        setFormSent(false);
+        err === "user not found" ? setValidEmail(false) : setValidEmail(true);
+        err === "wrong password"
+          ? setValidPassword(false)
+          : setValidPassword(true);
       });
+    setFormSent(true);
   };
 
   return (
@@ -49,12 +56,7 @@ const Login: NextPage = () => {
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           {/* Sign Up Form */}
-          <form
-            className="space-y-6"
-            action="#"
-            method="POST"
-            onSubmit={handleFormSubmit}
-          >
+          <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
             {/* Username Input Field */}
             <div>
               <label
@@ -91,12 +93,12 @@ const Login: NextPage = () => {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
-                    href="#"
+                  <Link
+                    href="/auth/reset"
                     className="font-semibold text-teal-400/80 hover:text-teal-200/80"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="mt-2">
@@ -133,7 +135,7 @@ const Login: NextPage = () => {
           <p className="mt-10 text-center text-base text-white/80">
             Not a member yet?{" "}
             <Link
-              href="/signup"
+              href="/auth/signup"
               className="font-semibold leading-6 text-teal-400/80 hover:text-teal-200/80"
             >
               Sign Up!

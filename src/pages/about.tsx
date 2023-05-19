@@ -7,9 +7,9 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <div className="min-h-full px-6 py-12 lg:px-8">
-        <div className="max-w-sm sm:mx-auto sm:w-full lg:max-w-4xl">
-          <h2 className="mt-10 text-left text-2xl font-bold leading-9 tracking-tight text-white/90">
-            ✨ About Megalan
+        <div className="mx-auto w-full md:max-w-md lg:max-w-4xl">
+          <h2 className="mt-14 text-left text-4xl font-extrabold tracking-tight text-white/90 sm:text-5xl">
+            ✨ About MegaLAN
           </h2>
           <p className="py-2 text-white/90">
             MegaLAN is the biggest LAN and console party in Sydney. Held at UNSW
@@ -42,8 +42,8 @@ const Home: NextPage = () => {
             made for gamers, by gamers - a place where the magic of gaming comes
             to life!
           </p>
-          <h2 className="mt-4 text-left text-2xl font-bold leading-9 tracking-tight text-white/90">
-            🎮 Clubs and Societies at Megalan
+          <h2 className="mt-4 text-left text-4xl font-extrabold tracking-tight text-white/90 sm:text-5xl">
+            🎮 Clubs and Societies at MegaLAN
           </h2>
           <div className="py-2 text-white/90">
             <li>PCSoc: Computers and Tech</li>
@@ -59,7 +59,7 @@ const Home: NextPage = () => {
             <li>Smash Brothers Society</li>
             <li>Game Development Society</li>
           </div>
-          <h2 className="mt-4 text-left text-2xl font-bold leading-9 tracking-tight text-white/90">
+          <h2 className="mt-4 text-left text-4xl font-extrabold tracking-tight text-white/90 sm:text-5xl">
             🚀 Supported by
           </h2>
           <p className="py-2 text-white/90">
@@ -69,10 +69,10 @@ const Home: NextPage = () => {
           <p className="py-2 text-sm text-white/90">
             MegaLAN will always make free tickets available for UNSW students
           </p>
-          <h2 className="mt-4 text-left text-2xl font-bold leading-9 tracking-tight text-white/90">
+          <h2 className="mt-4 text-left text-4xl font-extrabold tracking-tight text-white/90 sm:text-5xl">
             💻 Website Developer
           </h2>
-          <div className="my-4 flex h-fit flex-row space-x-4 rounded-lg bg-white/70 px-4 py-4 sm:space-x-6 sm:px-6">
+          <div className="my-4 flex h-fit flex-row space-x-4 rounded-lg bg-white/20 px-4 py-4 drop-shadow-md sm:space-x-6 sm:px-6">
             <Image
               src="https://avatars.githubusercontent.com/u/100102134?s=400&u=d97f6a0bbbe82cd89eb1e889d8563014ae724081&v=4"
               alt="hehe-logo"
@@ -80,8 +80,8 @@ const Home: NextPage = () => {
               width={80}
               className=" my-auto flex-shrink-0 rounded-lg object-cover"
             />
-            <div className="flex flex-col space-y-1 py-2 text-gray-800">
-              <h1 className="text-lg font-medium">Hari Pramod B</h1>
+            <div className="flex flex-col space-y-1 py-2 text-white/90">
+              <h1 className="text-lg font-bold">Hari Pramod B</h1>
               <a
                 href="https://github.com/HARI-PRMD"
                 className="flex flex-row space-x-2"
