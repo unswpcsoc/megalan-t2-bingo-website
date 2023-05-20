@@ -2,24 +2,18 @@ import { z } from "zod";
 
 import {
   createTRPCRouter,
-  publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
 
 export const bingoRouter = createTRPCRouter({
   getBingoGrid: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(({ input }) => {
+    .input(z.object({ email: z.string().email() }))
+    .query(async ({ input, ctx }) => {
+      const user = await ctx.prisma.user.findUnique({where: {email: input.email}});
+      if (!user) return {status: false, message: "User not found"};
+      // user.id
       return {
-        greeting: `Hello ${input.id}`,
+        greeting: `Hello ${input.email}`,
       };
     }),
-
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
 });

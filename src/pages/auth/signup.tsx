@@ -44,9 +44,8 @@ const SignUp: NextPage = () => {
       return (
         <VerificationCodeForm
           code={currentVerificationCode}
-          onChange={async (res: { verified: boolean }) => {
-            if (res.verified) await createUser();
-            if (!res.verified) doVerification();
+          onChange={(res: boolean) => {
+            if (res) void createUser();
           }}
         />
       );

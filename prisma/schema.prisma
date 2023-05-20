@@ -14,19 +14,49 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Society {
+    id     String @id @default(cuid())
+    admins User[]
+    tasks  Task[]
 }
 
-model Tasks {
-    id             String @id @default(cuid())
-    society        String
-    name           String @db.Text
-    points         Int    @default(100)
-    societyId      String @unique
-    completedUsers User[]
+model Task {
+    id        String   @id @default(cuid())
+    name      String
+    points    Int      @default(100)
+    TaskId    String
+    type      TaskType @default(SOCIETY)
+    Society   Society? @relation(fields: [societyId], references: [id])
+    societyId String?
+    User      User?    @relation(fields: [userId], references: [id])
+    userId    String?
+}
+
+model User {
+    id             String    @id @default(cuid())
+    name           String    @unique
+    password       String
+    email          String    @unique
+    createdAt      DateTime  @default(now())
+    emailVerified  DateTime?
+    type           UserType  @default(PARTICIPANT)
+    image          String?
+    accounts       Account[]
+    sessions       Session[]
+    completedTasks Task[]
+    Society        Society?  @relation(fields: [societyId], references: [id])
+    societyId      String?
+}
+
+enum TaskType {
+    COSPLAY
+    SOCIAL
+    SOCIETY
+}
+
+enum UserType {
+    PARTICIPANT
+    ADMIN
 }
 
 // Necessary for Next auth
@@ -54,20 +84,6 @@ model Session {
     userId       String   @unique
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-    id            String    @id @default(cuid())
-    name          String    @unique
-    password      String
-    email         String    @unique
-    createdAt     DateTime  @default(now())
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    tasksId       String?
-    Tasks         Tasks?    @relation(fields: [tasksId], references: [id])
 }
 
 model VerificationToken {
