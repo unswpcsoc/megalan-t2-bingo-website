@@ -28,17 +28,10 @@ export const validateRouter = createTRPCRouter({
       }
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
-
   sendVerificationCode: publicProcedure
   .input(z.object({ email: z.string().email(), name: z.string() }))
   .mutation(({ input }): {status: boolean, code: string} => {
     const res = SendVerificationEmail(input.email, input.name);
     return { status: res.status, code: res.code };
-  }),
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
   }),
 });

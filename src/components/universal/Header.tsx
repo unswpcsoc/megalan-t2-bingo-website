@@ -1,6 +1,11 @@
-import { Bars3Icon } from "@heroicons/react/24/solid";
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import {
+  ArrowLeftOnRectangleIcon,
+  ArrowRightOnRectangleIcon,
+  Bars3Icon,
+} from "@heroicons/react/24/solid";
 import { type NextComponentType } from "next";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import megalan_logo from "public/images/megalan_logo.png";
@@ -11,13 +16,14 @@ import { useState } from "react";
  */
 const Header: NextComponentType = () => {
   const [displayNav, setDisplayNav] = useState(false);
+  const { data: session } = useSession();
   return (
     <div
-      className={`absolute z-50 flex h-fit w-full flex-col ${
-        displayNav ? "bg-sky-800" : "bg-transparent"
+      className={`fixed z-50 flex h-fit w-full flex-col rounded-b-2xl duration-150 ${
+        displayNav ? "backdrop-blur-2xl" : "backdrop-blur-md"
       }`}
     >
-      <div className="flex flex-row justify-between py-4 pl-4 pr-8">
+      <div className="flex flex-row justify-between py-1 pl-4 pr-8 sm:py-2">
         <Image
           src={megalan_logo}
           alt="logo"
@@ -30,12 +36,25 @@ const Header: NextComponentType = () => {
       </div>
       <div>
         {displayNav && (
-          <nav className="z-50 flex h-fit w-full flex-col space-y-8 rounded-b-2xl bg-sky-800 px-8 pb-8 pt-2 text-center text-lg text-white/80">
+          <nav className="z-50 flex h-fit w-full flex-col space-y-8 px-8 pb-8 pt-2 text-center text-xl font-semibold text-white/80">
             <Link href="/">Home</Link>
-            <Link href="/login">Login</Link>
             <Link href="/about">About Us</Link>
-            <Link href="/bingo">Bingo</Link>
-            <Link href="/logout">Log Out</Link>
+
+            {session ? (
+              <>
+                <Link href="/bingo">Bingo</Link>
+                <h1>Logged in as {session.user.name}</h1>
+                <Link href="/" onClick={() => signOut()}>
+                  Log Out
+                  <ArrowRightOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
+                </Link>
+              </>
+            ) : (
+              <Link href="/auth/login">
+                Log In / Sign Up
+                <ArrowLeftOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
+              </Link>
+            )}
           </nav>
         )}
       </div>

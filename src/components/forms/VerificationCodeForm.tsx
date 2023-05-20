@@ -1,6 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { api } from "~/utils/api";
 
 const VerificationCodeForm = ({
   code,
@@ -11,21 +10,15 @@ const VerificationCodeForm = ({
 }) => {
   const [isVerified, setIsVerified] = useState(false);
   const [formSent, setFormSent] = useState(false);
-  const [resend, setResend] = useState(false);
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       code: { value: string };
     };
     const enteredCode: string = target.code.value;
-    if (resend) {
-      onChange({ verified: false });
-      setResend(false);
-      return;
-    }
     if (enteredCode !== code) setIsVerified(false);
     if (enteredCode === code) {
-      onChange({ verified: true });
+      onChange(true);
       return;
     }
     setFormSent(true);
@@ -70,20 +63,6 @@ const VerificationCodeForm = ({
             </p>
           )}
         </div>
-        {/* Resend Code Button */}
-        {!isVerified && (
-          <div>
-            <button
-              onClick={() => {
-                setResend(true);
-                handleFormSubmit;
-              }}
-              className="flex w-full justify-center rounded-md bg-teal-400/80 px-3 py-2 text-base font-semibold leading-6 text-white shadow-sm hover:bg-teal-500/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600/80"
-            >
-              Resend Code
-            </button>
-          </div>
-        )}
         {/* Submit Button */}
         <div>
           <button

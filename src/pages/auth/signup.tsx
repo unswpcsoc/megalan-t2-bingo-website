@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Layout from "./_layout";
-import atlantis from "public/images/atlantis1.jpg";
-import Image from "next/image";
+import Layout from "../_layout";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import NameAndEmailForm from "~/components/forms/NameAndEmailForm";
 import { api } from "~/utils/api";
@@ -46,9 +44,8 @@ const SignUp: NextPage = () => {
       return (
         <VerificationCodeForm
           code={currentVerificationCode}
-          onChange={async (res: { verified: boolean }) => {
-            if (res.verified) await createUser();
-            if (!res.verified) doVerification();
+          onChange={(res: boolean) => {
+            if (res) void createUser();
           }}
         />
       );
@@ -63,8 +60,10 @@ const SignUp: NextPage = () => {
         password: currentPassword,
         name: currentName,
       })
-      .then((res) => {
-        if (res.status) console.log(res.message); // redirect to login page
+      .then(async (res) => {
+        if (res.status) console.log(res.message);
+        // redirect to login page
+        await router.push("/auth/login");
       })
       .catch(() => {
         console.log("Experienced error while signing up");
