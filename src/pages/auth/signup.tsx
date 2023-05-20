@@ -6,6 +6,7 @@ import { api } from "~/utils/api";
 import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
 import { useRouter } from "next/router";
 import { type NextPage } from "next/types";
+import { signIn } from "next-auth/react";
 
 const SignUp: NextPage = () => {
   const router = useRouter();
@@ -53,7 +54,7 @@ const SignUp: NextPage = () => {
   };
 
   // sign up user which creates a new user account
-  const createUser = async () => {
+  const createUser = () => {
     signUpMutation
       .mutateAsync({
         email: currentEmail,
@@ -61,15 +62,26 @@ const SignUp: NextPage = () => {
         name: currentName,
       })
       .then(async (res) => {
-        if (res.status) console.log(res.message);
-        // redirect to login page
-        await router.push("/auth/login");
+        if (!res.status) return await router.push("/");
+        // if success, sign in user and redirect page accordingly
+        signIn("credentials", {
+          email: currentEmail,
+          password: currentPassword,
+          redirect: false,
+        })
+          .then(async (res) => {
+            // if success redirect to bingo page
+            if (res?.ok) return await router.push("/bingo");
+          })
+          .catch(async () => {
+            // if any error occurs, redirect to home page
+            return await router.push("/");
+          });
       })
-      .catch(() => {
-        console.log("Experienced error while signing up");
+      .catch(async () => {
+        // if any error occurs, redirect to home page
+        return await router.push("/");
       });
-    // redirect to user home page
-    await router.push("/bingo");
   };
 
   const doVerification = () => {
