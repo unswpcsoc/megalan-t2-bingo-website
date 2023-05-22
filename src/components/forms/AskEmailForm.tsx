@@ -1,6 +1,9 @@
 import { useState, type SyntheticEvent } from "react";
 import { api } from "~/utils/api";
 
+/*
+ * Form that takes an email as input and returns the email address with onChange
+ */
 const AskEmailForm = ({ onChange }: { onChange: FunctionStringCallback }) => {
   const [validEmail, setValidEmail] = useState(false);
   const [formSent, setFormSent] = useState(false);

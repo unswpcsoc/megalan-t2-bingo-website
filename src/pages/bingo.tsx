@@ -20,6 +20,7 @@ const Bingo: NextPage = () => {
       <Layout>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <h1>{JSON.stringify(session.user, null, 2)}</h1>
+          <h1>USER ID : {JSON.stringify(session.id)}</h1>
           <button
             className="bg-black p-12 text-white"
             onClick={() => handleTaskCompletion()}

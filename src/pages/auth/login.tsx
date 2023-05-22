@@ -34,6 +34,7 @@ const Login: NextPage = () => {
         res?.error === "wrong password"
           ? setValidPassword(false)
           : setValidPassword(true);
+
         if (res?.ok) await router.push("/bingo");
       })
       .catch((err) => {
