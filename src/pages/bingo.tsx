@@ -6,10 +6,8 @@ import { getToken } from "next-auth/jwt";
 
 const Bingo: NextPage = () => {
   // display some profile
-  const { data: session } = useSession({
-    required: true,
-  });
-
+  const { data: session } = useSession();
+  console.log(session);
   // const t = getToken(session?.user)
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
