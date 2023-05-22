@@ -5,7 +5,7 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/solid";
 import { type NextComponentType } from "next";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import megalan_logo from "public/images/megalan_logo.png";
@@ -43,7 +43,7 @@ const Header: NextComponentType = () => {
             {session ? (
               <>
                 <Link href="/bingo">Bingo</Link>
-                <h1>Logged in as {session.user.name}</h1>
+                <h1>Logged in as {session.user?.name}</h1>
                 <Link href="/" onClick={() => signOut()}>
                   Log Out
                   <ArrowRightOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />

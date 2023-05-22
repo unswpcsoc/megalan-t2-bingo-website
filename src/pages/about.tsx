@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
-import Layout from "./_layout";
 import Image from "next/image";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
+import Layout from "~/pages/_layout";
 
 const Home: NextPage = () => {
   return (

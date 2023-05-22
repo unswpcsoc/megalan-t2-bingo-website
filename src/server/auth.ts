@@ -3,12 +3,14 @@ import {
   getServerSession,
   type NextAuthOptions,
   type DefaultSession,
+  type DefaultUser,
 } from "next-auth";
 import CredentialsProvider  from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
+import { type DefaultJWT } from "next-auth/jwt";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -19,19 +21,27 @@ import { prisma } from "~/server/db";
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
-      id: string;
-      name: string;
       email: string;
+      name: string;
       // ...other properties
       // role: UserRole;
-    } & DefaultSession["user"];
+    }
+    id: string;
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User extends DefaultUser {
+    id: string;
+  }
 }
+
+declare module "next-auth/jwt" {
+  interface JWT extends DefaultJWT {
+    id: string;
+    email: string;
+    name: string;
+    // username: string; // also my jwt will have the property, I can access this property within the JWT using the getToken() helper
+  }
+}
+
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -43,13 +53,24 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    jwt(params) {
-      // update token
-      if (params.user?.id) {
-        params.token.email = params.user.email;
-      }
-      // return final_token
-      return params.token;
+    jwt({ token, user }) {
+      console.log("user-id", user.id)
+      token.id = user.id;
+      console.log("token-id-1", token.id)
+      // if (account && account.access_token) {
+      //   // token.username = user.username; // asign the value
+      // }
+      return token
+    },
+    session({ session, token }) {
+      console.log(`HELLOOO THEREEEEEE DOES THIS 
+      EVEN WORKKK?????????????????
+      ????????????????????????????????????????????????????????
+      ???????????????????????????????????????????????????????`)
+      session.id = token.id;
+      // session.user.id = token.id;
+      // session.username = token.username; // pass the value to the client session
+      return session;
     },
   },
   adapter: PrismaAdapter(prisma),
@@ -71,11 +92,15 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, _req) {
         // logic to look up the user from the credentials supplied
-        const userFromDB = await prisma.user.findUnique({where:{email: credentials?.email}})
-        if (!userFromDB) throw new Error("user not found");
-        if (credentials?.password !== userFromDB.password) throw new Error("wrong password");
-        return { id: userFromDB.id, email: userFromDB?.email, name: userFromDB?.name }
-      }
+        console.log(credentials);
+        const user = await prisma.user.findFirst({ where: { email: credentials?.email } });
+        console.log(user);
+        if (!user) throw new Error("user not found");
+        if (credentials?.password !== user.password) throw new Error("wrong password");
+        // credentials.
+       
+        return { id: user.id, email: user.email, name: user.name };
+      },
     })
     /**
      * ...add more providers here.
@@ -88,7 +113,7 @@ export const authOptions: NextAuthOptions = {
      */
   ],
   pages: {
-    signIn: "/auth/login"
+    signIn: "/auth/login",
   }
 };
 
