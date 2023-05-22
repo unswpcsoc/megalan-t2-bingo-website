@@ -6,7 +6,6 @@ import {
   type DefaultUser,
 } from "next-auth";
 import CredentialsProvider  from "next-auth/providers/credentials";
-import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
@@ -27,6 +26,7 @@ declare module "next-auth" {
       // ...other properties
       // role: UserRole;
     }
+    id: string;
   }
   interface User extends DefaultUser {
     id: string;
@@ -38,10 +38,8 @@ declare module "next-auth/jwt" {
     id: string;
     email: string;
     name: string;
-    // username: string; // also my jwt will have the property, I can access this property within the JWT using the getToken() helper
   }
 }
-
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -54,31 +52,19 @@ export const authOptions: NextAuthOptions = {
   },
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    jwt({ token, user, account }) {
-      token.id = user.id;
-      if (account && account.access_token) {
-          // token.username = user.username; // asign the value
+    jwt({ token, user}) {
+  
+      if (user) {
+        token.id = user.id;
       }
-      return token
+  
+      return token;
     },
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
+    session({ session, token }) {
+      session.id = token.id;
       return session;
-    },
+    }
   },
-  // jwt: {
-  //   encode(p) {
-  //     const token = Jwt.sign(p.token!, p.secret);
-  //     return token;
-  //   },
-    
-  //   decode(p) {
-  //     const decoded = jwt.verify(p.token, p.secret);
-  //     return decoded;
-  //   },
-  // },
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({

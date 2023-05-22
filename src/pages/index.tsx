@@ -2,7 +2,6 @@
 import { type NextPage } from "next";
 import Link from "next/link";
 import Layout from "./_layout";
-import { signIn } from "next-auth/react";
 
 const Home: NextPage = () => {
   return (
@@ -12,8 +11,6 @@ const Home: NextPage = () => {
           <h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             MegaLAN Atlantis 🔱
           </h1>
-
-          <button onClick={() => signIn()}>SINAEGKHAIGUHAE</button>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
             <div className="flex max-w-md flex-col p-2 text-white">
               <h3 className="text-2xl font-bold">Hello There 👋</h3>
