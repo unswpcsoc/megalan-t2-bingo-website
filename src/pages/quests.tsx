@@ -4,13 +4,13 @@ import Layout from "./_layout";
 import { api } from "~/utils/api";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
 
-const Bingo: NextPage = () => {
+const Quests: NextPage = () => {
   // display some profile
   const { status, data: session } = useSession();
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
 
-  const data = api.bingo.getBingoGrid.useQuery({ email: session.user.email });
+  const data = api.quests.getUserQuests.useQuery({ email: session.user.email });
   const handleTaskCompletion = () => {
     console.log(data);
   };
@@ -34,4 +34,4 @@ const Bingo: NextPage = () => {
   return <div>loading...</div>;
 };
 
-export default Bingo;
+export default Quests;

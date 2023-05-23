@@ -35,7 +35,7 @@ const Login: NextPage = () => {
           ? setValidPassword(false)
           : setValidPassword(true);
 
-        if (res?.ok) await router.push("/bingo");
+        if (res?.ok) await router.push("/quests");
       })
       .catch((err) => {
         err === "user not found" ? setValidEmail(false) : setValidEmail(true);

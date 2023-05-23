@@ -17,7 +17,7 @@ export const SendVerificationEmail = (
   });
 
   const verificationCode = randomUUID().toString();
-  const body = `Hello ${name}, \n\nYour Verification Code for Megalan Atlantis Bingo is:\n${verificationCode}`;
+  const body = `Hello ${name}, \n\nYour Verification Code for Megalan Atlantis Quests is:\n${verificationCode}`;
   const mailOptions = {
     from: "sender@gmail.com", // Sender address
     to: emailId, // List of recipients
@@ -50,7 +50,7 @@ export const SendForgotPasswordEmail = (emailId: string, name: string): { status
   });
 
   const verificationCode = randomUUID().toString();
-  const body = `Hello ${name}, \n\nYour Verification Code for resetting your Megalan Atlantis Bingo account password is:\n${verificationCode}\n\nIf you did not request a reset of you password, you can ignore this email.`;
+  const body = `Hello ${name}, \n\nYour Verification Code for resetting your Megalan Atlantis Quests account password is:\n${verificationCode}\n\nIf you did not request a reset of you password, you can ignore this email.`;
   const mailOptions = {
     from: "sender@gmail.com", // Sender address
     to: emailId, // List of recipients

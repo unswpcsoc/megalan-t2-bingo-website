@@ -5,8 +5,8 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 
-export const bingoRouter = createTRPCRouter({
-  getBingoGrid: protectedProcedure
+export const QuestsRouter = createTRPCRouter({
+  getUserQuests: protectedProcedure
     .input(z.object({ email: z.string().email() }))
     .query(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.findUnique({where: {email: input.email}});

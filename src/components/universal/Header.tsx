@@ -42,7 +42,7 @@ const Header: NextComponentType = () => {
 
             {session ? (
               <>
-                <Link href="/bingo">Bingo</Link>
+                <Link href="/quests">Quests</Link>
                 <h1>Logged in as {session.user?.name}</h1>
                 <Link href="/" onClick={() => signOut()}>
                   Log Out
