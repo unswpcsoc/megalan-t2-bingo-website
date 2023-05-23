@@ -70,8 +70,8 @@ const SignUp: NextPage = () => {
           redirect: false,
         })
           .then(async (res) => {
-            // if success redirect to bingo page
-            if (res?.ok) return await router.push("/bingo");
+            // if success redirect to quests page
+            if (res?.ok) return await router.push("/quests");
           })
           .catch(async () => {
             // if any error occurs, redirect to home page

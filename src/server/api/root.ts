@@ -1,7 +1,7 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { validateRouter } from "./routers/validate";
 import { authenticationRouter } from "./routers/authentication";
-import { bingoRouter } from "./routers/bingo";
+import { QuestsRouter } from "./routers/quests";
 
 /**
  * This is the primary router for your server.
@@ -10,7 +10,7 @@ import { bingoRouter } from "./routers/bingo";
  */
 export const appRouter = createTRPCRouter({
   validate: validateRouter,
-  bingo: bingoRouter,
+  quests: QuestsRouter,
   auth: authenticationRouter,
 });
 
