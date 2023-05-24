@@ -4,60 +4,59 @@ import { api } from "~/utils/api";
 /*
  * Form that takes an email as input and returns the email address with onChange
  */
-const AskEmailForm = ({
-  name,
+const AskNameForm = ({
   onChange,
 }: {
   name: string;
   onChange: FunctionStringCallback;
 }) => {
-  const [validEmail, setValidEmail] = useState(false);
+  const [validName, setValidName] = useState(false);
   const [formSent, setFormSent] = useState(false);
   // api mutation to send verification email and check if email exists
-  const forgotPasswordMutation = api.auth.forgotPassword.useMutation();
+  const findUserMutation = api.validate.findUserWithName.useMutation();
   const handleFormSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
-      email: { value: string };
+      name: { value: string };
     };
-    const email: string = target.email.value;
+    const name: string = target.name.value.toLowerCase();
     // make api call to verify and send code to email
-    forgotPasswordMutation
-      .mutateAsync({ name, email })
+    findUserMutation
+      .mutateAsync({ name })
       .then((res) => {
-        setValidEmail(true);
-        return onChange(res.code);
+        if (res.found) setValidName(true);
+        onChange(name);
+        return;
       })
-      .catch(() => setValidEmail(false));
+      .catch(() => setValidName(false));
     setFormSent(true);
   };
   return (
     <>
-      {/* Email Submission Form */}
+      {/* Username Submission Form */}
       <form id="email-form" className="space-y-6" onSubmit={handleFormSubmit}>
-        {/* Email Address Input Section */}
+        {/* Username Input Section */}
         <div>
           <label
-            htmlFor="email"
+            htmlFor="name"
             className="block text-base font-normal leading-6 text-white/80"
           >
-            Email Address
+            Username
           </label>
           <div className="mt-2">
             <input
-              placeholder="example@gmail.com"
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
+              placeholder="username"
+              id="name"
+              name="text"
+              type="text"
               required
               className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-400/80 sm:text-sm sm:leading-6"
             />
           </div>
-          {/* Invalid Email Error */}
-          {!validEmail && formSent && (
+          {/* Invalid Username Error */}
+          {!validName && formSent && (
             <p className="text-sm text-red-400">
-              *Account with provided email does not exist.
+              *Account with provided name does not exist.
             </p>
           )}
         </div>
@@ -75,4 +74,4 @@ const AskEmailForm = ({
   );
 };
 
-export default AskEmailForm;
+export default AskNameForm;

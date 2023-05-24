@@ -10,7 +10,7 @@ const Quests: NextPage = () => {
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
 
-  const data = api.quests.getUserQuests.useQuery({ email: session.user.email });
+  const data = api.quests.getUserQuests.useQuery({ id: session.id });
   const handleTaskCompletion = () => {
     console.log(data);
   };

@@ -70,12 +70,12 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Username", type: "text" },
+        name: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, _req) {
         // logic to look up the user from the credentials supplied
-        const user = await prisma.user.findFirst({ where: { email: credentials?.email } });
+        const user = await prisma.user.findFirst({ where: { name: credentials?.name } });
         if (!user) throw new Error("user not found");
         if (credentials?.password !== user.password) throw new Error("wrong password");
         return { id: user.id, email: user.email, name: user.name };

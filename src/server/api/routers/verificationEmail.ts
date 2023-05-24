@@ -3,9 +3,9 @@ import nodemailer from "nodemailer";
 
 export const SendVerificationEmail = (
   emailId: string,
-  name: string,
-): {status: boolean, code: string} => {
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  name: string
+): { status: boolean; code: string } => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   const transport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -38,7 +38,10 @@ export const SendVerificationEmail = (
   return { status: sendSuccess, code: verificationCode };
 };
 
-export const SendForgotPasswordEmail = (emailId: string, name: string): { status: boolean, code: string } => {
+export const SendForgotPasswordEmail = (
+  emailId: string,
+  name: string
+): { status: boolean; code: string } => {
   const transport = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -60,13 +63,12 @@ export const SendForgotPasswordEmail = (emailId: string, name: string): { status
 
   let sendSuccess = false;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  transport.sendMail(mailOptions, (error, info) => {
+  transport.sendMail(mailOptions, (error, _info) => {
     if (error) {
-      console.log("error:", error);
+      sendSuccess = false;
     } else {
-      console.log("info", info);
       sendSuccess = true;
     }
   });
   return { status: sendSuccess, code: verificationCode };
-}
+};

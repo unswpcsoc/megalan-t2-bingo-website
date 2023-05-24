@@ -5,6 +5,9 @@ import { useState } from "react";
 import AskEmailForm from "~/components/forms/AskEmailForm";
 import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
 import { api } from "~/utils/api";
+import AskNameForm from "~/components/forms/AskNameForm";
+import NotLoggedIn from "~/components/universal/NotLoggedIn";
+import Link from "next/link";
 
 const Reset: NextPage = () => {
   // STEPS:
@@ -14,7 +17,7 @@ const Reset: NextPage = () => {
   // 4. redirect to login page
   const [step, setStep] = useState(1);
   const [code, setCode] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   // api mutation to change user password
   const changePasswordMutation = api.auth.changePassword.useMutation();
 
@@ -22,48 +25,69 @@ const Reset: NextPage = () => {
     switch (step) {
       case 1:
         return (
-          <AskEmailForm
+          <AskNameForm
+            name={name}
             onChange={(res) => {
-              setCode(res);
-              setEmail(res);
+              setName(res);
               setStep(2);
             }}
           />
         );
       case 2:
         return (
-          <VerificationCodeForm
-            code={code}
-            onChange={(res: boolean) => setStep(res ? 3 : 2)}
+          <AskEmailForm
+            name={name}
+            onChange={(res) => {
+              setCode(res);
+              setStep(3);
+            }}
           />
         );
       case 3:
         return (
+          <VerificationCodeForm
+            code={code}
+            onChange={(res: boolean) => res && setStep(4)}
+          />
+        );
+      case 4:
+        return (
           <PasswordCreationForm
             onChange={(res) => {
               changePasswordMutation
-                .mutateAsync({ email, password: res })
+                .mutateAsync({ name, password: res })
                 .then((res) => console.log(res))
                 .catch((err) => console.log(err));
-              setStep(4);
+              setStep(5);
             }}
           />
         );
       default:
-        return <></>;
+        return (
+          <div className="flex justify-center">
+            <Link
+              href="/auth/login"
+              className="w-fit rounded-full bg-white/10 px-10 py-3 text-2xl font-bold text-white no-underline transition hover:bg-white/20"
+            >
+              Login
+            </Link>
+          </div>
+        );
     }
   };
 
   const showCorrectHeader = () => {
     switch (step) {
       case 1:
-        return "Enter your email address";
+        return "Enter your Account Username";
       case 2:
-        return "Enter your Verification code";
+        return "Enter your email address";
       case 3:
-        return "Enter new password";
+        return "Enter your Verification code";
       case 4:
-        return "Successfully changed Password";
+        return "Enter new password";
+      case 5:
+        return "Successfully changed Password, Try Logging In";
       default:
         return "Re-directing to login page";
     }
