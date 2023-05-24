@@ -2,7 +2,8 @@ import { useState, type SyntheticEvent } from "react";
 import { api } from "~/utils/api";
 
 /*
- * Form that takes an email as input and returns the email address with onChange
+ * Form that takes a name as input, validates that an account exists with that name
+ * and returns the name with onChange
  */
 const AskNameForm = ({
   onChange,
@@ -10,17 +11,19 @@ const AskNameForm = ({
   name: string;
   onChange: FunctionStringCallback;
 }) => {
+  // basic flags
   const [validName, setValidName] = useState(false);
   const [formSent, setFormSent] = useState(false);
   // api mutation to send verification email and check if email exists
   const findUserMutation = api.validate.findUserWithName.useMutation();
+
   const handleFormSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       name: { value: string };
     };
     const name: string = target.name.value.toLowerCase();
-    // make api call to verify and send code to email
+    // make api call to verify that use exists
     findUserMutation
       .mutateAsync({ name })
       .then((res) => {
@@ -31,6 +34,7 @@ const AskNameForm = ({
       .catch(() => setValidName(false));
     setFormSent(true);
   };
+
   return (
     <>
       {/* Username Submission Form */}

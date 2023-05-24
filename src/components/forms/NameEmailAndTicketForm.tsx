@@ -3,7 +3,8 @@ import { useState } from "react";
 import { api } from "~/utils/api";
 
 /**
- * Form that accepts user name and email and send to parent through onChange()
+ * Form that accepts user name, email, and megalan order ID
+ * verifies if user is unique and sends details to parent through onChange
  */
 const NameEmailAndTicketForm = ({
   onChange,

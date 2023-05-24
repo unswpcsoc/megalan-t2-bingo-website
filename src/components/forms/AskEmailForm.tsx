@@ -11,6 +11,7 @@ const AskEmailForm = ({
   name: string;
   onChange: FunctionStringCallback;
 }) => {
+  // basic flags
   const [validEmail, setValidEmail] = useState(false);
   const [formSent, setFormSent] = useState(false);
   // api mutation to send verification email and check if email exists

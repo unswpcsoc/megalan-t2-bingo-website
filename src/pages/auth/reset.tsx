@@ -6,7 +6,6 @@ import AskEmailForm from "~/components/forms/AskEmailForm";
 import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
 import { api } from "~/utils/api";
 import AskNameForm from "~/components/forms/AskNameForm";
-import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import Link from "next/link";
 
 const Reset: NextPage = () => {

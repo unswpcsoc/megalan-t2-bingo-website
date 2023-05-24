@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { z } from "zod";
 import axios from "axios";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { SendVerificationEmail } from "./verificationEmail";
-import { env } from "process";
 import { TRPCError } from "@trpc/server";
 
 export const validateRouter = createTRPCRouter({

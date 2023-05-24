@@ -8,14 +8,17 @@ const VerificationCodeForm = ({
   code: string;
   onChange: CallableFunction;
 }) => {
+  // basic flags
   const [isVerified, setIsVerified] = useState(false);
   const [formSent, setFormSent] = useState(false);
+
   const handleFormSubmit = (event: React.SyntheticEvent): void => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       code: { value: string };
     };
     const enteredCode: string = target.code.value;
+    // return code if matches, else display error
     if (enteredCode !== code) setIsVerified(false);
     if (enteredCode === code) {
       onChange(true);
