@@ -2,19 +2,22 @@ import { type NextPage } from "next";
 import Layout from "../_layout";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import { useState } from "react";
-import AskEmailForm from "~/components/forms/AskEmailForm";
 import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
 import { api } from "~/utils/api";
+import Link from "next/link";
+import AskNameAndTicketForm from "~/components/forms/AskNameAndTicketForm";
+import { hideEmail } from "~/components/functions/hideEmail";
 
 const Reset: NextPage = () => {
   // STEPS:
-  // 1. show ask for email address form
-  // 2. show verification code form
+  // 1. show ask for name and megaLAN ticket order ID
+  // 2. send email to user and show verification code form
   // 3. show password reset form
   // 4. redirect to login page
   const [step, setStep] = useState(1);
   const [code, setCode] = useState("");
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   // api mutation to change user password
   const changePasswordMutation = api.auth.changePassword.useMutation();
 
@@ -22,10 +25,11 @@ const Reset: NextPage = () => {
     switch (step) {
       case 1:
         return (
-          <AskEmailForm
-            onChange={(res) => {
-              setCode(res);
-              setEmail(res);
+          <AskNameAndTicketForm
+            onChange={(res: { name: string; code: string; email: string }) => {
+              setName(res.name);
+              setEmail(res.email);
+              setCode(res.code);
               setStep(2);
             }}
           />
@@ -34,7 +38,7 @@ const Reset: NextPage = () => {
         return (
           <VerificationCodeForm
             code={code}
-            onChange={(res: boolean) => setStep(res ? 3 : 2)}
+            onChange={(res: boolean) => res && setStep(3)}
           />
         );
       case 3:
@@ -42,28 +46,37 @@ const Reset: NextPage = () => {
           <PasswordCreationForm
             onChange={(res) => {
               changePasswordMutation
-                .mutateAsync({ email, password: res })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
+                .mutateAsync({ name, password: res })
+                .then(() => console.log("Changed Password"))
+                .catch(() => console.log("Error while changing password"));
               setStep(4);
             }}
           />
         );
       default:
-        return <></>;
+        return (
+          <div className="flex justify-center">
+            <Link
+              href="/auth/login"
+              className="w-fit rounded-full bg-white/10 px-10 py-3 text-2xl font-bold text-white no-underline transition hover:bg-white/20"
+            >
+              Login
+            </Link>
+          </div>
+        );
     }
   };
 
   const showCorrectHeader = () => {
     switch (step) {
       case 1:
-        return "Enter your email address";
+        return "Enter your Account Username";
       case 2:
-        return "Enter your Verification code";
+        return `Enter the Verification code sent to ${hideEmail(email)}`;
       case 3:
         return "Enter new password";
       case 4:
-        return "Successfully changed Password";
+        return "Successfully changed Password, Try Logging In";
       default:
         return "Re-directing to login page";
     }

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
 const Login: NextPage = () => {
-  const [validEmail, setValidEmail] = useState(true);
+  const [validName, setValidName] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
   const [formSent, setFormSent] = useState(false);
   const router = useRouter();
@@ -16,21 +16,21 @@ const Login: NextPage = () => {
     event.preventDefault();
     // defines form inputs
     const target = event.target as typeof event.target & {
-      email: { value: string };
+      name: { value: string };
       password: { value: string };
     };
-    const email: string = target.email.value;
+    const name: string = target.name.value.toLowerCase();
     const password: string = hash(target.password.value);
     // sign in user with next-auth
     signIn("credentials", {
-      email: email,
+      name: name,
       password: password,
       redirect: false,
     })
       .then(async (res) => {
         res?.error === "user not found"
-          ? setValidEmail(false)
-          : setValidEmail(true);
+          ? setValidName(false)
+          : setValidName(true);
         res?.error === "wrong password"
           ? setValidPassword(false)
           : setValidPassword(true);
@@ -38,7 +38,7 @@ const Login: NextPage = () => {
         if (res?.ok) await router.push("/quests");
       })
       .catch((err) => {
-        err === "user not found" ? setValidEmail(false) : setValidEmail(true);
+        err === "user not found" ? setValidName(false) : setValidName(true);
         err === "wrong password"
           ? setValidPassword(false)
           : setValidPassword(true);
@@ -61,26 +61,28 @@ const Login: NextPage = () => {
             {/* Username Input Field */}
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-base font-medium leading-6 text-white/80"
               >
-                Email address
+                Username
+                <span className="float-right inline-block">
+                  (case insensitive)
+                </span>
               </label>
               <div className="mt-2">
                 <input
-                  placeholder="example@gmail.com"
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  placeholder="username"
+                  id="name"
+                  name="name"
+                  type="text"
                   required
                   className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-md ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-400/80 sm:text-sm sm:leading-6"
                 />
               </div>
               {/* Invalid Email Error */}
-              {!validEmail && formSent && (
+              {!validName && formSent && (
                 <p className="text-sm font-normal text-red-400">
-                  *Account with this email not found.
+                  *Account with this name not found.
                 </p>
               )}
             </div>

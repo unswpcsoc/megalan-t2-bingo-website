@@ -4,7 +4,14 @@ import { api } from "~/utils/api";
 /*
  * Form that takes an email as input and returns the email address with onChange
  */
-const AskEmailForm = ({ onChange }: { onChange: FunctionStringCallback }) => {
+const AskEmailForm = ({
+  name,
+  onChange,
+}: {
+  name: string;
+  onChange: FunctionStringCallback;
+}) => {
+  // basic flags
   const [validEmail, setValidEmail] = useState(false);
   const [formSent, setFormSent] = useState(false);
   // api mutation to send verification email and check if email exists
@@ -17,7 +24,7 @@ const AskEmailForm = ({ onChange }: { onChange: FunctionStringCallback }) => {
     const email: string = target.email.value;
     // make api call to verify and send code to email
     forgotPasswordMutation
-      .mutateAsync({ email })
+      .mutateAsync({ name, email })
       .then((res) => {
         setValidEmail(true);
         return onChange(res.code);
