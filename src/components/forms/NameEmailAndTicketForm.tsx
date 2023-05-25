@@ -63,10 +63,21 @@ const NameEmailAndTicketForm = ({
         {!displayMssge ? (
           <h1 className="text-white/80">IMPORTANT - Click Me</h1>
         ) : (
-          <h1 className="text-white/80">
-            Use your preferred name or your gamer tag, as long as it is safe for
-            work. Inappropriate names will not be allowed to win prizes.
-          </h1>
+          <div className="space-y-2 py-2">
+            <p className="text-left text-white/80">
+              <span className="font-bold underline">NAME</span>: Use your
+              preferred name or your gamer tag, as long as it is safe for work.
+              Inappropriate names will not be allowed to win prizes.
+            </p>
+            <p className="text-left text-white/80">
+              <span className="font-bold underline">EMAIL</span>: Use your
+              email, a verification code will be sent to it.
+            </p>
+            <p className="text-left text-white/80">
+              <span className="font-bold underline">TICKET</span>: Never reveal
+              your megaLAN order ID to anyone.
+            </p>
+          </div>
         )}
       </button>
       {/* Email Submission Form */}

@@ -40,7 +40,6 @@ const SignUp: NextPage = () => {
               setCurrentEmail(value.email);
               setCurrentName(value.name.toLowerCase());
               setCurrentTicketID(value.ticketID);
-              console.log("parent");
               setStep(2);
             }}
           />

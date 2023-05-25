@@ -44,14 +44,16 @@ export const validateRouter = createTRPCRouter({
     }),
 
   findUserWithName: publicProcedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string(), ticket: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.findFirst({
         where: { name: input.name },
       });
       if (!user)
         throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
-      return { found: true };
+      if (user.ticketID !== input.ticket)
+        return { found: true, ticket: false, email: user.email };
+      return { found: true, ticket: true, email: user.email };
     }),
 
   sendVerificationCode: publicProcedure

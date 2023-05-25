@@ -27,11 +27,10 @@ export const SendVerificationEmail = (
 
   let sendSuccess = false;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-  transport.sendMail(mailOptions, (error, info) => {
+  transport.sendMail(mailOptions, (error, _info) => {
     if (error) {
-      console.log("error:", error);
+      sendSuccess = false;
     } else {
-      console.log("info", info);
       sendSuccess = true;
     }
   });

@@ -2,20 +2,21 @@ import { type NextPage } from "next";
 import Layout from "../_layout";
 import PasswordCreationForm from "~/components/forms/PasswordCreationForm";
 import { useState } from "react";
-import AskEmailForm from "~/components/forms/AskEmailForm";
 import VerificationCodeForm from "~/components/forms/VerificationCodeForm";
 import { api } from "~/utils/api";
-import AskNameForm from "~/components/forms/AskNameForm";
 import Link from "next/link";
+import AskNameAndTicketForm from "~/components/forms/AskNameAndTicketForm";
+import { hideEmail } from "~/components/functions/hideEmail";
 
 const Reset: NextPage = () => {
   // STEPS:
-  // 1. show ask for email address form
-  // 2. show verification code form
+  // 1. show ask for name and megaLAN ticket order ID
+  // 2. send email to user and show verification code form
   // 3. show password reset form
   // 4. redirect to login page
   const [step, setStep] = useState(1);
   const [code, setCode] = useState("");
+  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   // api mutation to change user password
   const changePasswordMutation = api.auth.changePassword.useMutation();
@@ -24,40 +25,31 @@ const Reset: NextPage = () => {
     switch (step) {
       case 1:
         return (
-          <AskNameForm
-            name={name}
-            onChange={(res) => {
-              setName(res);
+          <AskNameAndTicketForm
+            onChange={(res: { name: string; code: string; email: string }) => {
+              setName(res.name);
+              setEmail(res.email);
+              setCode(res.code);
               setStep(2);
             }}
           />
         );
       case 2:
         return (
-          <AskEmailForm
-            name={name}
-            onChange={(res) => {
-              setCode(res);
-              setStep(3);
-            }}
+          <VerificationCodeForm
+            code={code}
+            onChange={(res: boolean) => res && setStep(3)}
           />
         );
       case 3:
-        return (
-          <VerificationCodeForm
-            code={code}
-            onChange={(res: boolean) => res && setStep(4)}
-          />
-        );
-      case 4:
         return (
           <PasswordCreationForm
             onChange={(res) => {
               changePasswordMutation
                 .mutateAsync({ name, password: res })
-                .then((res) => console.log(res))
-                .catch((err) => console.log(err));
-              setStep(5);
+                .then(() => console.log("Changed Password"))
+                .catch(() => console.log("Error while changing password"));
+              setStep(4);
             }}
           />
         );
@@ -80,12 +72,10 @@ const Reset: NextPage = () => {
       case 1:
         return "Enter your Account Username";
       case 2:
-        return "Enter your email address";
+        return `Enter the Verification code sent to ${hideEmail(email)}`;
       case 3:
-        return "Enter your Verification code";
-      case 4:
         return "Enter new password";
-      case 5:
+      case 4:
         return "Successfully changed Password, Try Logging In";
       default:
         return "Re-directing to login page";
