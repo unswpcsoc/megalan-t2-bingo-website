@@ -45,6 +45,7 @@ model User {
     accounts       Account[]
     sessions       Session[]
     completedTasks Task[]
+    totalPoints    Int       @default(0)
     Society        Society?  @relation(fields: [societyId], references: [id])
     societyId      String?
 }

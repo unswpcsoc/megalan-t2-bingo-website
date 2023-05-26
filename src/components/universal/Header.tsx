@@ -39,6 +39,7 @@ const Header: NextComponentType = () => {
           <nav className="z-50 flex h-fit w-full flex-col space-y-8 px-8 pb-8 pt-2 text-center text-xl font-semibold text-white/80">
             <Link href="/">Home</Link>
             <Link href="/about">About Us</Link>
+            <Link href="/leaderboard">Leaderboards</Link>
 
             {session ? (
               <>
