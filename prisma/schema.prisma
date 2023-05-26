@@ -16,6 +16,7 @@ datasource db {
 
 model Society {
     id     String @id @default(cuid())
+    name String
     admins User[]
     tasks  Task[]
 }
@@ -24,12 +25,11 @@ model Task {
     id        String   @id @default(cuid())
     name      String
     points    Int      @default(100)
-    TaskId    String
     type      TaskType @default(SOCIETY)
     Society   Society? @relation(fields: [societyId], references: [id])
     societyId String?
-    User      User?    @relation(fields: [userId], references: [id])
-    userId    String?
+    users CompletedTask[]
+
 }
 
 model User {
@@ -44,9 +44,20 @@ model User {
     image          String?
     accounts       Account[]
     sessions       Session[]
-    completedTasks Task[]
+    completedTasks CompletedTask[]
     Society        Society?  @relation(fields: [societyId], references: [id])
     societyId      String?
+}
+
+
+model CompletedTask {
+    task Task @relation(fields: [taskID], references: [id])
+    taskID String
+    user User @relation(fields: [userID], references: [id])
+    userID String
+    completedAt DateTime @default(now())
+    authorisedBy String
+    @@id([taskID, userID])
 }
 
 enum TaskType {
