@@ -5,6 +5,7 @@ import { api } from "~/utils/api";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import UserSearchBar from "~/components/userSearchBar";
 import { useState } from "react";
+
 const CompleteTask: NextPage = () => {
   // display some profile
   const { status, data: session } = useSession();
@@ -13,39 +14,33 @@ const CompleteTask: NextPage = () => {
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
 
-  const data = api.quests.getUserQuests.useQuery({ id: session.id });
-  const handleTaskCompletion = () => {
-    console.log(data);
-  };
 
 
-
-
-  if (status === "authenticated")
-    return (
-      <Layout>
-        <main className="flex min-h-screen flex-col items-center ">
-          <div className="container  mt-6 flex flex-col justify-center items-center px-4 py-16 ">
-            <h1 className="text-center text-5xl  font-extrabold tracking-tight text-white sm:text-[5rem]">
+  return (
+    <Layout>
+      <main className="flex min-h-screen flex-col items-center ">
+        <div className="container  mt-6 flex flex-col justify-center items-center px-4 py-16 ">
+          <h1 className="text-center text-5xl  font-extrabold tracking-tight text-white sm:text-[5rem]">
             Complete Quests 🔱
-            </h1>
+          </h1>
 
 
-            <div className="flex w-full flex-col h-full justify-evenly py-5">
-              <div>Pick Participant</div>
-              <UserSearchBar/>
+          <div className="flex w-full flex-col h-full justify-evenly py-5">
+            <div>Pick Participant</div>
+            <UserSearchBar />
+            
 
-              <div className="h-20 overflow-scroll"> 
-          
-              
-              </div>
+            <div className="h-20 overflow-scroll">
+
+
             </div>
           </div>
-        </main>
+        </div>
+      </main>
 
 
-      </Layout>
-    );
+    </Layout>
+  );
 
   return <div>loading...</div>;
 };
