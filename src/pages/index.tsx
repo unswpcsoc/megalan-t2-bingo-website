@@ -2,8 +2,10 @@
 import { type NextPage } from "next";
 import Link from "next/link";
 import Layout from "./_layout";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
+  const { data: session } = useSession();
   return (
     <Layout>
       <main className="flex min-h-screen flex-col items-center justify-center">
@@ -24,33 +26,47 @@ const Home: NextPage = () => {
             <Link
               className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
               href="/leaderboard"
-              target="_blank"
             >
               <h3 className="text-2xl font-bold">Quests Leaderboard →</h3>
-              <div className="text-lg">Check out the leader boards!</div>
+              <p className="text-lg">Check out the leader boards!</p>
             </Link>
-            <Link
-              className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-              href="/auth/login"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Login / Sign up to Play →</h3>
-              <div className="text-lg">
-                Make an account with your Megalan Ticket Details Here, or Login
-                if you already created an account.
-              </div>
-            </Link>
-            <Link href="/admin/completeTask"> completeTask</Link>
+            {session ? (
+              <Link
+                className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+                href="/quests"
+              >
+                <h3 className="text-2xl font-bold">
+                  View {session.user.name}&apos;s Quests →
+                </h3>
+                <p className="text-lg">
+                  Find out which tasks you&apos;ve completed and which ones you
+                  can complete!.
+                </p>
+              </Link>
+            ) : (
+              <Link
+                className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+                href="/auth/login"
+                target="_blank"
+              >
+                <h3 className="text-2xl font-bold">
+                  Login / Sign up to Play →
+                </h3>
+                <p className="text-lg">
+                  Make an account with your Megalan Ticket Details Here, or
+                  Login if you already created an account.
+                </p>
+              </Link>
+            )}
             <Link
               className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
               href="/about"
-              target="_blank"
             >
               <h3 className="text-2xl font-bold">About Us →</h3>
-              <div className="text-lg">
+              <p className="text-lg">
                 Extra details on what MegaLAN is about, and which clubs and
                 societies participate in this LAN Party.
-              </div>
+              </p>
             </Link>
           </div>
         </div>

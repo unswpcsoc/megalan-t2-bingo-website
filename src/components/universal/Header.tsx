@@ -20,7 +20,7 @@ const Header: NextComponentType = () => {
   return (
     <div
       className={`fixed z-50 flex h-fit w-full flex-col rounded-b-2xl duration-150 ${
-        displayNav ? "backdrop-blur-2xl" : "backdrop-blur-md"
+        displayNav ? "backdrop-blur-2xl" : "backdrop-blur-sm"
       }`}
     >
       <div className="flex flex-row justify-between py-1 pl-4 pr-8 sm:py-2">
@@ -39,21 +39,27 @@ const Header: NextComponentType = () => {
           <nav className="z-50 flex h-fit w-full flex-col space-y-8 px-8 pb-8 pt-2 text-center text-xl font-semibold text-white/80">
             <Link href="/">Home</Link>
             <Link href="/about">About Us</Link>
-
-            {session ? (
+            <Link href="/leaderboard">Leaderboards</Link>
+            {/* display login information */}
+            {!session ? (
+              <Link href="/auth/login">
+                Log In / Sign Up
+                <ArrowLeftOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
+              </Link>
+            ) : (
               <>
-                <Link href="/quests">Quests</Link>
+                {/* display quests or dashboard based on user type */}
+                {session && session.type === "PARTICIPANT" ? (
+                  <Link href="/quests">Quests</Link>
+                ) : (
+                  <Link href="/admin/dashboard">Admin Dashboard</Link>
+                )}
                 <h1>Logged in as @{session.user?.name}</h1>
                 <Link href="/" onClick={() => signOut()}>
                   Log Out
                   <ArrowRightOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
                 </Link>
               </>
-            ) : (
-              <Link href="/auth/login">
-                Log In / Sign Up
-                <ArrowLeftOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
-              </Link>
             )}
           </nav>
         )}
