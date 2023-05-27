@@ -28,16 +28,13 @@ export const QuestsRouter = createTRPCRouter({
           totalPoints: "desc",
         },
         where: {
-          NOT: {
-            totalPoints: 0,
-          },
+          type: "PARTICIPANT",
         },
       })
       .then((users) => {
         const cleanData: { name: string; points: number }[] = [];
         users.forEach((user) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          cleanData.push({ name: user.name, points: user.totalPoints });
+          cleanData.push({ name: user.name, points: 10 });
         });
         if (users) return cleanData;
         return { data: [{ name: "Hehe", points: 100 }] };

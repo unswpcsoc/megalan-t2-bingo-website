@@ -20,7 +20,7 @@ const Header: NextComponentType = () => {
   return (
     <div
       className={`fixed z-50 flex h-fit w-full flex-col rounded-b-2xl duration-150 ${
-        displayNav ? "backdrop-blur-2xl" : "backdrop-blur-md"
+        displayNav ? "backdrop-blur-2xl" : "backdrop-blur-sm"
       }`}
     >
       <div className="flex flex-row justify-between py-1 pl-4 pr-8 sm:py-2">
