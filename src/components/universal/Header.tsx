@@ -40,21 +40,26 @@ const Header: NextComponentType = () => {
             <Link href="/">Home</Link>
             <Link href="/about">About Us</Link>
             <Link href="/leaderboard">Leaderboards</Link>
-
-            {session ? (
+            {/* display login information */}
+            {!session ? (
+              <Link href="/auth/login">
+                Log In / Sign Up
+                <ArrowLeftOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
+              </Link>
+            ) : (
               <>
-                <Link href="/quests">Quests</Link>
+                {/* display quests or dashboard based on user type */}
+                {session && session.type === "PARTICIPANT" ? (
+                  <Link href="/quests">Quests</Link>
+                ) : (
+                  <Link href="/admin/dashboard">Admin Dashboard</Link>
+                )}
                 <h1>Logged in as @{session.user?.name}</h1>
                 <Link href="/" onClick={() => signOut()}>
                   Log Out
                   <ArrowRightOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
                 </Link>
               </>
-            ) : (
-              <Link href="/auth/login">
-                Log In / Sign Up
-                <ArrowLeftOnRectangleIcon className="mb-1 ml-2 inline-block h-5 w-5 text-white" />
-              </Link>
             )}
           </nav>
         )}

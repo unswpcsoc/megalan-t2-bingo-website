@@ -5,7 +5,7 @@ import {
   type DefaultSession,
   type DefaultUser,
 } from "next-auth";
-import CredentialsProvider  from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 import { prisma } from "~/server/db";
@@ -25,11 +25,13 @@ declare module "next-auth" {
       name: string;
       // ...other properties
       // role: UserRole;
-    }
+    };
     id: string;
+    type: "PARTICIPANT" | "ADMIN";
   }
   interface User extends DefaultUser {
     id: string;
+    type: "PARTICIPANT" | "ADMIN";
   }
 }
 
@@ -38,6 +40,7 @@ declare module "next-auth/jwt" {
     id: string;
     email: string;
     name: string;
+    type: "PARTICIPANT" | "ADMIN";
   }
 }
 
@@ -52,18 +55,19 @@ export const authOptions: NextAuthOptions = {
   },
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    jwt({ token, user}) {
-  
+    jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.type = user.type;
       }
-  
+
       return token;
     },
     session({ session, token }) {
       session.id = token.id;
+      session.type = token.type;
       return session;
-    }
+    },
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -71,20 +75,28 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         name: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _req) {
         // logic to look up the user from the credentials supplied
-        const user = await prisma.user.findFirst({ where: { name: credentials?.name } });
+        const user = await prisma.user.findFirst({
+          where: { name: credentials?.name },
+        });
         if (!user) throw new Error("user not found");
-        if (credentials?.password !== user.password) throw new Error("wrong password");
-        return { id: user.id, email: user.email, name: user.name };
+        if (credentials?.password !== user.password)
+          throw new Error("wrong password");
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          type: user.type,
+        };
       },
-    })
+    }),
   ],
   pages: {
     signIn: "/auth/login",
-  }
+  },
 };
 
 /**
