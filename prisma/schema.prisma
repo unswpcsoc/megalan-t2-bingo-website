@@ -16,47 +16,47 @@ datasource db {
 
 model Society {
     id     String @id @default(cuid())
-    name String
+    name   String
     admins User[]
     tasks  Task[]
 }
 
 model Task {
-    id        String   @id @default(cuid())
+    id        String          @id @default(cuid())
     name      String
-    points    Int      @default(100)
-    type      TaskType @default(SOCIETY)
-    Society   Society? @relation(fields: [societyId], references: [id])
+    points    Int             @default(100)
+    type      TaskType        @default(SOCIETY)
+    Society   Society?        @relation(fields: [societyId], references: [id])
     societyId String?
-    users CompletedTask[]
-
+    users     CompletedTask[]
 }
 
 model User {
-    id             String    @id @default(cuid())
-    name           String    @unique
+    id             String          @id @default(cuid())
+    name           String          @unique
     password       String
     email          String
-    ticketID       String    @unique
-    createdAt      DateTime  @default(now())
+    ticketID       String          @unique
+    createdAt      DateTime        @default(now())
     emailVerified  DateTime?
-    type           UserType  @default(PARTICIPANT)
+    type           UserType        @default(PARTICIPANT)
     image          String?
     accounts       Account[]
     sessions       Session[]
     completedTasks CompletedTask[]
-    Society        Society?  @relation(fields: [societyId], references: [id])
+    Society        Society?        @relation(fields: [societyId], references: [id])
     societyId      String?
+    totalPoints    Int             @default(0)
 }
 
-
 model CompletedTask {
-    task Task @relation(fields: [taskID], references: [id])
-    taskID String
-    user User @relation(fields: [userID], references: [id])
-    userID String
-    completedAt DateTime @default(now())
+    task         Task     @relation(fields: [taskID], references: [id])
+    taskID       String
+    user         User     @relation(fields: [userID], references: [id])
+    userID       String
+    completedAt  DateTime @default(now())
     authorisedBy String
+
     @@id([taskID, userID])
 }
 
