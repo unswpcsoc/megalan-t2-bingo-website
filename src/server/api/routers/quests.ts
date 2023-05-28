@@ -15,35 +15,32 @@ export const QuestsRouter = createTRPCRouter({
         where: { id: input.id },
       });
       if (!user) return { status: false, message: "User not found" };
-      // user.id
       return {
         greeting: `Hello ${user.email}`,
       };
     }),
 
-  getLeaderboardStats: publicProcedure.query(({ ctx }) => {
-    ctx.prisma.user
-      .findMany({
+  getLeaderboardStats: publicProcedure
+    .input(z.object({ userID: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const users = await ctx.prisma.user.findMany({
         orderBy: {
           totalPoints: "desc",
         },
         where: {
           type: "PARTICIPANT",
         },
-      })
-      .then((users) => {
-        const cleanData: { name: string; points: number }[] = [];
-        users.forEach((user) => {
-          cleanData.push({ name: user.name, points: 10 });
-        });
-        if (users) return cleanData;
-        return { data: [{ name: "Hehe", points: 100 }] };
-      })
-      .catch((err: TRPCError) => {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: err.message.toString(),
+      });
+      let userIndex = -1;
+      if (users.length === 0) return { userIndex, data: [] };
+      const cleanData: { name: string; points: number }[] = [];
+      users.forEach((user, index) => {
+        if (user.id === input.userID) userIndex = index;
+        cleanData.push({
+          name: user.name,
+          points: user.totalPoints as number,
         });
       });
-  }),
+      return { userIndex, data: cleanData };
+    }),
 });
