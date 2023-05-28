@@ -1,7 +1,20 @@
 import { type NextPage } from "next";
 import Layout from "./_layout";
+import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 const Leaderboard: NextPage = () => {
+  const { data: session } = useSession();
+  const [rank, setRank] = useState(-1);
+  const leaderboards = api.quests.getLeaderboardStats.useQuery();
+  if (!leaderboards.data) return <h1>Loading ...</h1>;
+  console.log("i", leaderboards.data.userIndex);
+  if (leaderboards.data.userIndex) {
+    console.log(leaderboards.data.userIndex);
+    setRank(leaderboards.data.userIndex);
+  }
+
   return (
     <Layout>
       <main className="flex min-h-screen flex-col items-center">
@@ -9,6 +22,11 @@ const Leaderboard: NextPage = () => {
           <h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Leaderboards 🦈
           </h1>
+          {session && (
+            <h1 className="text-4xl font-bold text-white">
+              @{session.user.name} #{rank}
+            </h1>
+          )}
           <div className="grid w-full grid-cols-1 gap-4 overflow-hidden rounded-lg border md:gap-8">
             <table className=" w-full divide-y divide-white/40 text-white">
               <thead className="w-full bg-white/10 backdrop-blur-lg">
@@ -19,34 +37,28 @@ const Leaderboard: NextPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/10 text-center text-sm sm:text-lg">
-                <tr className="py-2">
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{1}</td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">
-                    {"hari"}
-                  </td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{10}</td>
-                </tr>
-                <tr className="py-2">
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{2}</td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">
-                    {"hari"}
-                  </td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{10}</td>
-                </tr>
-                <tr className="py-2">
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{3}</td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">
-                    {"hari"}
-                  </td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{10}</td>
-                </tr>
-                <tr className="py-2">
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{4}</td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">
-                    {"hari"}
-                  </td>
-                  <td className="white-space-nowrap px-2 py-2 sm:px-4">{10}</td>
-                </tr>
+                {leaderboards.data?.data.map((user, index) => {
+                  return (
+                    <tr
+                      key={index}
+                      className={`py-2 ${
+                        index === rank
+                          ? "border-2 border-green-500 bg-green-900/40 text-green-500"
+                          : ""
+                      }`}
+                    >
+                      <td className="white-space-nowrap px-2 py-2 sm:px-4">
+                        {index + 1}
+                      </td>
+                      <td className="white-space-nowrap px-2 py-2 sm:px-4">
+                        {user.name}
+                      </td>
+                      <td className="white-space-nowrap px-2 py-2 sm:px-4">
+                        {user.points}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
