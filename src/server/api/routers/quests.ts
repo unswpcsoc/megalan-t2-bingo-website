@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import {
+  adminProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
@@ -42,5 +43,21 @@ export const QuestsRouter = createTRPCRouter({
         });
       });
       return { userIndex, data: cleanData };
+    }),
+
+  getAdminClubs: adminProcedure
+    .input(z.object({ userID: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: { id: input.userID },
+        include: { Societies: true },
+      });
+      if (!user) return { clubs: [] };
+      const cleanData: { name: string; id: string }[] = [];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      user.Societies.forEach((soc: { name: string; id: string }) =>
+        cleanData.push(soc)
+      );
+      return { clubs: cleanData };
     }),
 });

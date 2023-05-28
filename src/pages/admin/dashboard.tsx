@@ -2,25 +2,37 @@ import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useSession } from "next-auth/react";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
-// TODO: Uncomment this before deploying to Production
-// import NotAdmin from "~/components/universal/notAdmin";
+import NotAdmin from "~/components/universal/notAdmin";
 import Link from "next/link";
+import { api } from "~/utils/api";
 
 const AdminDashboard: NextPage = () => {
-  const { data: session } = useSession({
-    required: true,
+  const { data: session } = useSession();
+
+  const { data: clubList } = api.quests.getAdminClubs.useQuery({
+    userID: session ? session.id : "",
   });
+
   if (!session) return <NotLoggedIn />;
-  // TODO: Uncomment this before deploying to Production
-  // if (session.type !== "ADMIN") return <NotAdmin />;
+  if (session.type !== "ADMIN") return <NotAdmin />;
 
   return (
     <Layout>
       <main className="flex min-h-screen flex-col items-center">
         <div className="container mt-6 flex flex-col items-center justify-center gap-8 px-4 py-16 ">
           <h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-            Society Admin Dashboard 🦈
+            {session.user.name}&apos;s Admin Dashboard 🦈
           </h1>
+        </div>
+        <div className="pb-8 text-2xl font-bold text-white">
+          <h3>You are club admin for:</h3>
+          {clubList?.clubs.map((club: { name: string; id: string }, index) => {
+            return (
+              <li key={index} className="text-lg">
+                {club.name}
+              </li>
+            );
+          })}
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
           <Link

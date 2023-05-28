@@ -3,9 +3,17 @@ import Layout from "../_layout";
 import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import CreateTaskForm from "~/components/forms/CreateTaskForm";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import NotAdmin from "~/components/universal/notAdmin";
+import NotLoggedIn from "~/components/universal/NotLoggedIn";
 
 const AdminTasks: NextPage = () => {
+  const { data: session } = useSession();
   const [showCreateTask, setShowCreateTask] = useState(false);
+
+  if (!session) return <NotLoggedIn />;
+  if (session.type !== "ADMIN") return <NotAdmin />;
+
   const handleTaskDelete = (id: string) => {
     console.log("taskID", id);
   };
@@ -20,9 +28,9 @@ const AdminTasks: NextPage = () => {
         <div className="container mt-6 flex flex-col items-center justify-center gap-8 px-4 py-16 ">
           {/* Title */}
           <h1 className="text-center text-4xl font-extrabold tracking-tight text-white sm:text-5xl sm:text-[5rem]">
-            {"Rhythm Game Society's"} 🔱
+            Task Manager 🔱
           </h1>
-
+          <h1>Displaying tasks from:</h1>
           {/* Header Section + Create Task Button */}
           <div className="w-full gap-4 space-y-4">
             {showCreateTask ? (
