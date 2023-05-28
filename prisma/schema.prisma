@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
     previewFeatures = ["fullTextSearch"]
 }
 
@@ -16,8 +16,8 @@ datasource db {
 }
 
 model Society {
-    id     String @id @default(cuid())
-    name   String
+    id     String   @id @default(cuid())
+    name   ClubType
     admins User[]
     tasks  Task[]
 }
@@ -45,8 +45,7 @@ model User {
     accounts       Account[]
     sessions       Session[]
     completedTasks CompletedTask[]
-    Society        Society?        @relation(fields: [societyId], references: [id])
-    societyId      String?
+    societies      Society[]
     totalPoints    Int             @default(0)
 }
 
@@ -70,6 +69,22 @@ enum TaskType {
 enum UserType {
     PARTICIPANT
     ADMIN
+}
+
+enum ClubType {
+    PCS
+    ES
+    RS
+    KS
+    FGS
+    RGS
+    VRS
+    GS
+    MCS
+    PS
+    SBS
+    GDS
+    SPONSOR
 }
 
 // Necessary for Next auth

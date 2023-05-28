@@ -57,7 +57,7 @@ export const QuestsRouter = createTRPCRouter({
         task: {connect : {id: input.taskId}},    
       }}}});
     }),
-
+   
   getUsers: adminProcedure
   .input(z.object({name: z.string()}))
   .query(async ({ input, ctx }) => {
@@ -71,22 +71,6 @@ export const QuestsRouter = createTRPCRouter({
     console.log(cleanUsers);
 
     return cleanUsers;
-
-    // .then((users) => {
-    //   const cleanData: { name: string; id: string; points: number; }[] = [];
-    //     users.forEach((user) => {
-    //       cleanData.push({ name: user.name, id: user.id, points: user.totalPoints});
-    //     });
-    //     if (users) return cleanData;
-    //   console.log(users);
-    //   return 10;
-    // }).catch((err: TRPCError) => {
-    //   throw new TRPCError({
-    //     code: "NOT_FOUND",
-    //     message: err.message.toString(),
-    //   });
-    // });
-
   }),
 
 });
