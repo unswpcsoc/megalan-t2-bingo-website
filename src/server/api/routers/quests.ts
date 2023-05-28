@@ -15,14 +15,13 @@ export const QuestsRouter = createTRPCRouter({
         where: { id: input.id },
       });
       if (!user) return { status: false, message: "User not found" };
-      // user.id
       return {
         greeting: `Hello ${user.email}`,
       };
     }),
 
   getLeaderboardStats: publicProcedure
-    .input(z.object({ userID: z.string().min(0) }))
+    .input(z.object({ userID: z.string() }))
     .query(async ({ input, ctx }) => {
       const users = await ctx.prisma.user.findMany({
         orderBy: {
@@ -32,15 +31,11 @@ export const QuestsRouter = createTRPCRouter({
           type: "PARTICIPANT",
         },
       });
-      let userIndex: number | null = null;
+      let userIndex = -1;
       if (users.length === 0) return { userIndex, data: [] };
-
       const cleanData: { name: string; points: number }[] = [];
       users.forEach((user, index) => {
-        console.log("UR RANK = ", index, user.id, input.userID);
-        if (user.id === input?.userID) {
-          userIndex = index;
-        }
+        if (user.id === input.userID) userIndex = index;
         cleanData.push({
           name: user.name,
           points: user.totalPoints as number,
