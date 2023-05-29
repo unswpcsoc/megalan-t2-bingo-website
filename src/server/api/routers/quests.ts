@@ -90,7 +90,6 @@ export const QuestsRouter = createTRPCRouter({
           include: { tasks: true },
         });
 
-      console.log("s", society);
       // for every society found add its tasks to allTasks array
       society.forEach((soc) => {
         // why doesn't .concat() work when its supposed to :sob:
@@ -99,7 +98,6 @@ export const QuestsRouter = createTRPCRouter({
         });
       });
 
-      console.log("t", allTasks);
       // return all the tasks
       return { tasks: allTasks };
     }),
