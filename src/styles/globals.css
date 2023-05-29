@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.select_society {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' fill='none' viewBox='0 0 24 24' stroke='hsl(83, 78%, 55%)' stroke-width='1.5' height='100'><path stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /></svg>") no-repeat;
+  background-size: 24px;
+  background-position: calc(100% - 16px) center;
+  background-repeat: no-repeat;
+  color: hsl(83, 78%, 55%);
+  background-color: rgba(54, 83, 19, 0.4);
+}
+/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+</svg> */

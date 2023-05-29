@@ -84,6 +84,7 @@ enum ClubType {
     SBS
     GDS
     SPONSOR
+    COSPLAY
 }
 
 // Necessary for Next auth
