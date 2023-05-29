@@ -33,7 +33,7 @@ const Home: NextPage = () => {
             {session ? (
               <Link
                 className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-                href="/quests"
+                href="/user/quests"
               >
                 <h3 className="text-2xl font-bold">
                   View {session.user.name}&apos;s Quests →

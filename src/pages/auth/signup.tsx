@@ -88,7 +88,7 @@ const SignUp: NextPage = () => {
         })
           .then(async (res) => {
             // if success redirect to quests page
-            if (res?.ok) return await router.push("/quests");
+            if (res?.ok) return await router.push("/user/quests");
           })
           .catch(async () => {
             // if any error occurs, redirect to home page
