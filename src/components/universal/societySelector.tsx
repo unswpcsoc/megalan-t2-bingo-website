@@ -30,12 +30,12 @@ const SocietySelector = ({ session, setSocietyId }: { session: Session, setSocie
   if (session.type !== "ADMIN") return <NotAdmin />;
 
   return (
-    <div className="border-2 h-2/5 border-black">
-    <div className="flex flex-row align-middle justify-start overflow-y-scroll ">
+    <div className="border-2 border-black">
+    <div className="flex flex-row align-middle items-center justify-start overflow-y-scroll ">
       {clubList?.clubs.map((club: { name: ClubNamesType; id: string }, index) => (
         <div
           key={index}
-          className={`max-w-xs mx-2 my-2 p-4 border-4 
+          className={`max-w-xs m-2 p-4 border-4 
           ${selectedCard === club.id ? 'border-blue-500 bg-green-600' : 'border-gray-300'
             }`}
           onClick={() => handleCardClick(club.id, club.name)}

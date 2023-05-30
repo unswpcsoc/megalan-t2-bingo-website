@@ -13,8 +13,12 @@ const UserCompletedTask = ({societyId, userId}: {societyId: ClubNamesType, userI
     societyName: societyId
   })
 
+  if (taskList?.tasks === undefined) {
+    return <></>;
+  }
+
   return (
-  <div className=" h-full flex flex-row overflow-y-scroll border-2 border-black">
+  <div className=" flex flex-row overflow-y-scroll border-2 border-black">
     {taskList?.tasks.map((task: {id: string, name: string, points: number, societyId: string | null;}, index) => {
       return (
       <div key={index} className="p-4">

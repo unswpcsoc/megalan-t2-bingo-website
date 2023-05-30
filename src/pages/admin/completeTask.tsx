@@ -7,8 +7,7 @@ import UserSearchBar from "~/components/universal/userSearchBar";
 import { useState } from "react";
 import SocietySelector from "~/components/universal/societySelector";
 import TaskSelector from "~/components/universal/taskSelector";
-import { ClubType } from "@prisma/client";
-import { ClubNamesType } from "~/components/types/clubs";
+import { type ClubNamesType } from "~/components/types/clubs";
 import UserCompletedTask from "~/components/universal/userSocietyCompletedTasks";
 
 const CompleteTask: NextPage = () => {
@@ -44,7 +43,7 @@ const CompleteTask: NextPage = () => {
 
             <SocietySelector setSocietyId={setSocietyId} session={session}/>
             
-            {societyId === null ? <>{societyId} </> : <TaskSelector societyId={societyId}/>}
+            {societyId === null ? <>{societyId} </> : <TaskSelector setTaskId={setTaskId} societyId={societyId}/>}
             {societyId === null || userId === "" ? <></> : <UserCompletedTask userId={userId} societyId={societyId}/>}
           </div>
         </div>
