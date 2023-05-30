@@ -1,7 +1,7 @@
 import { api } from "~/utils/api";
 import { type ClubNamesType } from "../types/clubs";
 import LoadingSpinner from "./LoadingSpinner";
-import TaskCard from "./TaskCard";
+import TaskCard from "./adminTaskCard";
 
 const AllTasks = ({
   showDelete,

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { api } from '~/utils/api';
-import NotLoggedIn from './universal/NotLoggedIn';
-import NotAdmin from './universal/notAdmin';
+import NotLoggedIn from './NotLoggedIn';
+import NotAdmin from './notAdmin';
 import { type Session } from 'next-auth';
-import { type ClubNamesType } from './types/clubs';
+import { type ClubNamesType } from '../types/clubs';
 
 
 const SocietySelector = ({ session, setSocietyId }: { session: Session, setSocietyId: CallableFunction}) => {

@@ -93,6 +93,7 @@ export const QuestsRouter = createTRPCRouter({
       // for every society found add its tasks to allTasks array
       society.forEach((soc) => {
         // why doesn't .concat() work when its supposed to :sob:
+        // skill issue
         soc.tasks.forEach((t) => {
           allTasks.push(t);
         });
@@ -101,6 +102,46 @@ export const QuestsRouter = createTRPCRouter({
       // return all the tasks
       return { tasks: allTasks };
     }),
+  
+  // society clubname 
+  // user id
+
+  getUserSocietyCompletedTasks: adminProcedure
+  .input(z.object({ userId: z.string(), societyName: ClubNameSchema}))
+  .query(async ({ input, ctx }) => {
+
+    const society = await ctx.prisma.society.findFirst({
+      where: {
+        name: input.societyName
+      }
+    });
+
+    const completedTasks = await ctx.prisma.completedTask.findMany({
+      where: {
+        userID: input.userId,
+        task: {
+          societyId: society?.id 
+        }
+      }
+    });
+
+    const taskIds: string[] = []
+
+    completedTasks.forEach(task => {taskIds.push(task.taskID)})
+
+
+
+    const resultTasks = await ctx.prisma.task.findMany({
+      where: {
+        id: {in: taskIds}
+      }
+
+    });
+
+    return {tasks: resultTasks};
+  }),
+
+
 
   createQuest: adminProcedure
     .input(

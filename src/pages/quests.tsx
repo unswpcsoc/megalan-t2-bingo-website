@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Layout from "./_layout";
 import { api } from "~/utils/api";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
-import SearchBar from "~/components/userSearchBar";
+import SearchBar from "~/components/universal/userSearchBar";
 const Quests: NextPage = () => {
   // display some profile
   const { status, data: session } = useSession();
