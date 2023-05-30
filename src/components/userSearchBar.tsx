@@ -11,10 +11,7 @@ const UserSearchBar = ({setUserID} : {setUserID: CallableFunction}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const {data: session} = useSession();
-  
+  const dropdownRef = useRef<HTMLDivElement>(null);  
 
   const handleSearch = (event: React.SyntheticEvent) => {
     event.preventDefault();

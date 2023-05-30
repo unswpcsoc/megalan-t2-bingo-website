@@ -5,6 +5,7 @@ import { api } from "~/utils/api";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import UserSearchBar from "~/components/userSearchBar";
 import { useState } from "react";
+import SocietySelector from "~/components/societySelector";
 
 const CompleteTask: NextPage = () => {
   // display some profile
@@ -35,8 +36,8 @@ const CompleteTask: NextPage = () => {
           <div className="flex w-full flex-col h-full justify-evenly py-5">
             <div>Pick Participant</div>
             <UserSearchBar setUserID={setUserID}/>
-            
 
+            <SocietySelector session={session}/>
             <div className="h-20 overflow-scroll">
 
 
