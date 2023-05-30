@@ -161,8 +161,11 @@ export const QuestsRouter = createTRPCRouter({
   .input(z.object({name: z.string()}))
   .query(async ({ input, ctx }) => {
     const resultUsers = await ctx.prisma.user.findMany({
+      orderBy: {
+        name: "asc"
+      },
       where: {
-        AND: [{type: "PARTICIPANT"}, {name: {search: input.name}}]
+        AND: [{type: "PARTICIPANT"}, {name: {contains: input.name, mode: "insensitive"}}]
       } 
     });
 
