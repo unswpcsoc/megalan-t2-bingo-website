@@ -3,7 +3,7 @@ import React, { Ref } from "react";
 import { api } from "~/utils/api";
 
 
-const SearchResults = ({searchString, setSearchQuery, setResults }: {searchString: string, setSearchQuery: CallableFunction, setResults: CallableFunction}) => {
+const SearchResults = ({searchString, setSearchQuery, setResults, setUserID }: {searchString: string, setSearchQuery: CallableFunction, setResults: CallableFunction, setUserID: CallableFunction}) => {
 
 
 
@@ -15,6 +15,7 @@ const resultUsers = api.quests.getUsers.useQuery({name: searchString});
           <button onClick={() => {
             setSearchQuery(result);
             setResults([]);
+            setUserID(result.id);
           }}>
             {result.name}
           </button>

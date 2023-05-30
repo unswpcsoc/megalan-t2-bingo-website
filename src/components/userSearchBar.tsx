@@ -7,7 +7,7 @@ import SearchResults from './searchResults';
 
 
 
-const UserSearchBar: React.FC = () => {
+const UserSearchBar = ({setUserID} : {setUserID: CallableFunction}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -18,20 +18,6 @@ const UserSearchBar: React.FC = () => {
 
   const handleSearch = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    
-    // Simulating an API call to fetch results
-    // Replace this with your actual API call
-    // if (searchQuery !== "")
-
-
-
-// TODO:
-// create input box that stores some searched value
-// on submit of that display results component
-// pass in search query into results component
-// results component will take that query and make a api call on the first line
-// then it will data.map the results
-// ez pz
   
     setTimeout(() => {
       const fetchedResults = ['Result 1', 'Result 2', 'Result 3'];
@@ -72,7 +58,7 @@ const UserSearchBar: React.FC = () => {
       </div>
       {results.length > 0 && isOpen && (
           <div ref={dropdownRef} className=" z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-            <SearchResults searchString={searchQuery} setResults={setResults} setSearchQuery={setSearchQuery}/>
+            <SearchResults setUserID={setUserID} searchString={searchQuery} setResults={setResults} setSearchQuery={setSearchQuery}/>
             </div>
           )}
     </form>

@@ -10,9 +10,17 @@ const CompleteTask: NextPage = () => {
   // display some profile
   const { status, data: session } = useSession();
   const [taskId, setTaskId] = useState('');
+  const [societyId, setSocietyId] = useState('');
+  const [userId, setUserID] = useState('');
 
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
+
+  // First step: Pick User
+
+  // Second Step Pick Society
+
+  // Third Step Pick Task
 
 
 
@@ -24,10 +32,9 @@ const CompleteTask: NextPage = () => {
             Complete Quests 🔱
           </h1>
 
-
           <div className="flex w-full flex-col h-full justify-evenly py-5">
             <div>Pick Participant</div>
-            <UserSearchBar />
+            <UserSearchBar setUserID={setUserID}/>
             
 
             <div className="h-20 overflow-scroll">
