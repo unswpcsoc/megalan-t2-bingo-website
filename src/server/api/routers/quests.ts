@@ -136,6 +136,7 @@ export const QuestsRouter = createTRPCRouter({
       });
       return { taskId: task.id };
     }),
+
   deleteQuest: adminProcedure
     .input(z.object({ taskId: z.string() }))
     .mutation(async ({ input, ctx }) => {
@@ -145,5 +146,74 @@ export const QuestsRouter = createTRPCRouter({
         },
       });
       return { status: true };
+    }),
+
+  getUserTasks: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const user = await ctx.prisma.user.findFirst({
+        where: {
+          id: input.userId,
+        },
+        include: {
+          completedTasks: true,
+        },
+      });
+
+      // if no user is found throw an error
+      if (!user)
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+
+      // generate query prisma for full task details
+      const completedTasksQuery: { id: string }[] = [];
+      user.completedTasks.forEach((task) => {
+        completedTasksQuery.push({ id: task.taskID });
+      });
+      // get all task objects from with full task details
+      const completedTasks = await ctx.prisma.task.findMany({
+        where: {
+          OR: completedTasksQuery,
+        },
+      });
+
+      // clean data for complete tasks
+      const allcompleteTasks: { name: string; points: number; id: string }[] =
+        [];
+      completedTasks.forEach((task) => {
+        allcompleteTasks.push({
+          name: task.name,
+          points: task.points,
+          id: task.id,
+        });
+      });
+
+      // create a prisma query based on the completed tasks
+      const allTasksQuery: { id: string }[] = [];
+      user.completedTasks.forEach((task) => {
+        allTasksQuery.push({ id: task.taskID });
+      });
+
+      // clean data for incomplete tasks
+      const allIncompleteTasks: { name: string; points: number; id: string }[] =
+        [];
+      // get incomplete tasks as well
+      const tasks = await ctx.prisma.task.findMany({
+        where: {
+          OR: allTasksQuery,
+        },
+      });
+
+      tasks.forEach((task) => {
+        allIncompleteTasks.push({
+          name: task.name,
+          points: task.points,
+          id: task.id,
+        });
+      });
+      // return the completed and incomplete tasks separately
+      return { incomplete: allIncompleteTasks, complete: allcompleteTasks };
     }),
 });

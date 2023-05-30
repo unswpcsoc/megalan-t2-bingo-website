@@ -5,6 +5,8 @@ import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import NotAdmin from "~/components/universal/notAdmin";
 import Link from "next/link";
 import { api } from "~/utils/api";
+import { getSocietyNameType } from "~/components/functions/getSocietyNameType";
+import { type ClubNamesType } from "~/components/types/clubs";
 
 const AdminDashboard: NextPage = () => {
   const { data: session } = useSession();
@@ -26,13 +28,15 @@ const AdminDashboard: NextPage = () => {
         </div>
         <div className="pb-8 text-2xl font-bold text-white">
           <h3>You are club admin for:</h3>
-          {clubList?.clubs.map((club: { name: string; id: string }, index) => {
-            return (
-              <li key={index} className="text-lg">
-                {club.name}
-              </li>
-            );
-          })}
+          {clubList?.clubs.map(
+            (club: { name: ClubNamesType; id: string }, index) => {
+              return (
+                <li key={index} className="text-lg">
+                  {getSocietyNameType(club.name).name}
+                </li>
+              );
+            }
+          )}
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
           <Link

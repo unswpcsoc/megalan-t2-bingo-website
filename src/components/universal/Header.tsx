@@ -50,7 +50,7 @@ const Header: NextComponentType = () => {
               <>
                 {/* display quests or dashboard based on user type */}
                 {session && session.type === "PARTICIPANT" ? (
-                  <Link href="/quests">Quests</Link>
+                  <Link href="/user/quests">Quests</Link>
                 ) : (
                   <Link href="/admin/dashboard">Admin Dashboard</Link>
                 )}
