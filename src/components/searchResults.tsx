@@ -11,9 +11,9 @@ const resultUsers = api.quests.getUsers.useQuery({name: searchString});
   return (
     <div>
       {resultUsers.data?.map((result, index) => (
-        <div key={index} className="px-4 py-2 hover:bg-gray-100">
+        <div key={index} className="px-4 py-2 hover:bg-gray-200">
           <button onClick={() => {
-            setSearchQuery(result);
+            setSearchQuery(result.name);
             setResults([]);
             setUserID(result.id);
           }}>
