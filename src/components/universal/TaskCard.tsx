@@ -6,7 +6,7 @@ const TaskCard = ({
   doDelete,
 }: {
   task: { name: string; points: number; id: string };
-  showDelete: boolean;
+  showDelete?: boolean;
   doDelete: FunctionStringCallback;
 }) => {
   return (
@@ -28,3 +28,5 @@ const TaskCard = ({
   );
 };
 export default TaskCard;
+
+// make a regular card without all this weird stuff
