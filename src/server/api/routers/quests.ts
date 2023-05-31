@@ -63,12 +63,12 @@ export const QuestsRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.findFirst({
         where: { id: input.userID },
-        include: { Societies: true },
+        include: { societies: true },
       });
       const cleanData: CleanClubDataType[] = [];
       if (!user) return { clubs: cleanData };
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      user.Societies.forEach((soc: CleanClubDataType) => cleanData.push(soc));
+      user.societies.forEach((soc: CleanClubDataType) => cleanData.push(soc));
       return { clubs: cleanData };
     }),
 
@@ -93,6 +93,7 @@ export const QuestsRouter = createTRPCRouter({
       // for every society found add its tasks to allTasks array
       society.forEach((soc) => {
         // why doesn't .concat() work when its supposed to :sob:
+        // skill issue
         soc.tasks.forEach((t) => {
           allTasks.push(t);
         });
@@ -101,6 +102,46 @@ export const QuestsRouter = createTRPCRouter({
       // return all the tasks
       return { tasks: allTasks };
     }),
+  
+  // society clubname 
+  // user id
+
+  getUserSocietyCompletedTasks: adminProcedure
+  .input(z.object({ userId: z.string(), societyName: ClubNameSchema}))
+  .query(async ({ input, ctx }) => {
+
+    const society = await ctx.prisma.society.findFirst({
+      where: {
+        name: input.societyName
+      }
+    });
+
+    const completedTasks = await ctx.prisma.completedTask.findMany({
+      where: {
+        userID: input.userId,
+        task: {
+          societyId: society?.id 
+        }
+      }
+    });
+
+    const taskIds: string[] = []
+
+    completedTasks.forEach(task => {taskIds.push(task.taskID)})
+
+
+
+    const resultTasks = await ctx.prisma.task.findMany({
+      where: {
+        id: {in: taskIds}
+      }
+
+    });
+
+    return {tasks: resultTasks};
+  }),
+
+
 
   createQuest: adminProcedure
     .input(
@@ -148,6 +189,34 @@ export const QuestsRouter = createTRPCRouter({
       return { status: true };
     }),
 
+
+  completeTask: adminProcedure
+    .input(z.object({ id: z.string(), taskId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      // add the task to the users completed list.
+     await ctx.prisma.user.update({where: {id: input.id}, data: {completedTasks: {create: {
+        authorisedBy: ctx.session.user.name,
+        task: {connect : {id: input.taskId}},    
+      }}}});
+    }),
+   
+  getUsers: adminProcedure
+  .input(z.object({name: z.string()}))
+  .query(async ({ input, ctx }) => {
+    const resultUsers = await ctx.prisma.user.findMany({
+      orderBy: {
+        name: "asc"
+      },
+      where: {
+        AND: [{type: "PARTICIPANT"}, {name: {contains: input.name, mode: "insensitive"}}]
+      } 
+    });
+
+    const cleanUsers = resultUsers.map((user) => {return {name: user.name, id: user.id}});
+    console.log(cleanUsers);
+
+    return cleanUsers;
+  }),
   getUserTasks: publicProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
