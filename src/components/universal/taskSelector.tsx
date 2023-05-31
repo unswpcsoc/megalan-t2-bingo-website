@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { api } from "~/utils/api";
 import { type ClubNamesType } from "../types/clubs";
-import TaskCard from "./taskCard";
+import TaskCard from "./TaskCard";
 
 const TaskSelector = ({societyId, setTaskId}: {societyId: ClubNamesType, setTaskId: CallableFunction}) => {
 
