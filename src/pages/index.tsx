@@ -36,7 +36,7 @@ const Home: NextPage = () => {
                 {session.type === "ADMIN" ? (
                   <Link
                     className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-                    href="/user/quests"
+                    href="/admin/dashboard"
                   >
                     <h3 className="text-2xl font-bold">
                       View {session.user.name}&apos;s Admin Dashboard →
@@ -48,7 +48,7 @@ const Home: NextPage = () => {
                 ) : (
                   <Link
                     className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-                    href="/admin/dashboard"
+                    href="/user/quests"
                   >
                     <h3 className="text-2xl font-bold">
                       View {session.user.name}&apos;s Quests →
