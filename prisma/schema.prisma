@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -36,7 +37,7 @@ model User {
     name           String          @unique
     password       String
     email          String
-    ticketID       String
+    ticketID       String          
     createdAt      DateTime        @default(now())
     emailVerified  DateTime?
     type           UserType        @default(PARTICIPANT)
@@ -44,7 +45,7 @@ model User {
     accounts       Account[]
     sessions       Session[]
     completedTasks CompletedTask[]
-    Societies      Society[]
+    societies      Society[]
     totalPoints    Int             @default(0)
 }
 
