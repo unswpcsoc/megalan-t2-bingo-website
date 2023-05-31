@@ -1,7 +1,7 @@
 import React from "react";
 import { api } from "~/utils/api";
 import { type ClubNamesType } from "../types/clubs";
-import TaskCard from "./taskCard";
+import TaskCard from "./TaskCard";
 
 const TaskSelector = ({societyId}: {societyId: ClubNamesType}) => {
 

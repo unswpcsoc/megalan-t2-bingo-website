@@ -53,6 +53,13 @@ const AdminDashboard: NextPage = () => {
             <h3 className="text-2xl font-bold">Manage Society Admins →</h3>
             <p className="text-lg">Add or remove Admins from a Society</p>
           </Link>
+          <Link
+            className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            href="/admin/completeTask"
+          >
+            <h3 className="text-2xl font-bold">Complete Task →</h3>
+            <p className="text-lg">Authorise a completed task for a user.</p>
+          </Link>
         </div>
       </main>
     </Layout>
