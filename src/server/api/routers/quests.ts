@@ -63,12 +63,12 @@ export const questsRouter = createTRPCRouter({
     .query(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.findFirst({
         where: { id: input.userID },
-        include: { Societies: true },
+        include: { societies: true },
       });
       const cleanData: CleanClubDataType[] = [];
       if (!user) return { clubs: cleanData };
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      user.Societies.forEach((soc: CleanClubDataType) => cleanData.push(soc));
+      user.societies.forEach((soc: CleanClubDataType) => cleanData.push(soc));
       return { clubs: cleanData };
     }),
 

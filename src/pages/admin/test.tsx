@@ -1,12 +1,12 @@
 import { api } from "~/utils/api";
 import Layout from "../_layout";
 import LoadingSpinner from "~/components/universal/LoadingSpinner";
-import { space } from "postcss/lib/list";
 
 const Test = () => {
   const { data: winner } = api.prize.getWinner.useQuery({
     category: "SOCIETY",
   });
+
   if (!winner) return <LoadingSpinner />;
   return (
     <Layout>
@@ -18,3 +18,8 @@ const Test = () => {
   );
 };
 export default Test;
+
+
+
+/* 
+{ "completeTasks": [ { "taskID": "clia1ozod0000tnrqq25tbjd5", "userID": "cli9x2bng0000tnlo1mt4ua1a", "completedAt": "2023-06-01T01:41:51.205Z", "authorisedBy": "hari", "task": { "points": 100 } }, { "taskID": "cli9xxgfj0001tnkm9d5fqlgm", "userID": "cli9x2bng0000tnlo1mt4ua1a", "completedAt": "2023-06-01T01:41:06.130Z", "authorisedBy": "hari", "task": { "points": 100 } } ] }*/
