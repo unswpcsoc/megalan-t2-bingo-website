@@ -40,21 +40,21 @@ const AdminDashboard: NextPage = () => {
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
           <Link
-            className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
             href="/admin/completeTask"
           >
             <h3 className="text-2xl font-bold">Complete Task →</h3>
             <p className="text-lg">Authorise a completed task for a user.</p>
           </Link>
           <Link
-            className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
             href="/admin/tasks"
           >
             <h3 className="text-2xl font-bold">Manage Tasks →</h3>
             <p className="text-lg">Add or delete tasks</p>
           </Link>
           <Link
-            className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
+            className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
             href="/admin/users"
           >
             <h3 className="text-2xl font-bold">Manage Society Admins →</h3>

@@ -1,10 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import SearchResults from './searchResults';
 // import { createReactQueryHooks } from '@trpc/react';
-import SearchResults from './SearchResults';
-
-
-
-
 
 const UserSearchBar = ({setUserID} : {setUserID: CallableFunction}) => {
   const [searchQuery, setSearchQuery] = useState('');
