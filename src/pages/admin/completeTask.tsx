@@ -1,21 +1,30 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Layout from "../_layout";
-import { api } from "~/utils/api";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
-import UserSearchBar from "~/components/universal/userSearchBar";
+import UserSearchBar from "~/components/universal/UserSearchBar";
 import { useState } from "react";
 import SocietySelector from "~/components/universal/societySelector";
-import TaskSelector from "~/components/universal/taskSelector";
+import TaskSelector from "~/components/universal/TaskSelector";
 import { type ClubNamesType } from "~/components/types/clubs";
-import UserCompletedTask from "~/components/universal/userSocietyCompletedTasks";
+// import UserCompletedTask from "~/components/universal/UserSocietyCompletedTasks";
+import SubmitButton from "~/components/universal/SubmitButton";
+import { type Task } from "@prisma/client";
 
 const CompleteTask: NextPage = () => {
   // display some profile
   const { status, data: session } = useSession();
-  const [taskId, setTaskId] = useState('');
+  const [task, setTask] = useState<Task | null>(null);
   const [societyId, setSocietyId] = useState<ClubNamesType| null>(null);
-  const [userId, setUserID] = useState('');
+  const [userId, setUserId] = useState('');
+  // const [refresh, setRefresh] = useState(false);
+
+  const refresh = () => {
+  window.location.reload();
+  }
+
+
+
 
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
@@ -25,26 +34,18 @@ const CompleteTask: NextPage = () => {
   // Second Step Pick Society
 
   // Third Step Pick Task
-
-  console.log(societyId);
-
-
-
   return (
     <Layout>
-      <main className="flex min-h-screen h-screen flex-col items-center ">
+      <main className="flex min-h-screen flex-col items-center ">
         <div className="container h-full mt-16 flex flex-col justify-center items-center px-4 py-2 ">
           <h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Complete Quests 🔱
           </h1>
-
-          <div className="flex w-full flex-col justify-evenly h-full py-5">
-            <UserSearchBar setUserID={setUserID}/>
-
+          <div className="flex w-full flex-col justify-start items-stretch h-full py-5">
+            <UserSearchBar setUserID={setUserId}/>
             <SocietySelector setSocietyId={setSocietyId} session={session}/>
-            
-            {societyId === null ? <>{societyId} </> : <TaskSelector setTaskId={setTaskId} societyId={societyId}/>}
-            {societyId === null || userId === "" ? <></> : <UserCompletedTask userId={userId} societyId={societyId}/>}
+            {societyId === null || userId === "" ? <></> : <TaskSelector userId={userId} setTask={setTask} societyId={societyId}/>}
+            <SubmitButton taskId={task?.id} userId={userId} taskPoints={task?.points} refresh={refresh}/>
           </div>
         </div>
       </main>
@@ -52,8 +53,6 @@ const CompleteTask: NextPage = () => {
 
     </Layout>
   );
-
-  return <div>loading...</div>;
 };
 
 export default CompleteTask;
