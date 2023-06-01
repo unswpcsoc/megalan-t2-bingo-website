@@ -4,7 +4,7 @@ import LoadingSpinner from "~/components/universal/LoadingSpinner";
 import { space } from "postcss/lib/list";
 
 const Test = () => {
-  const { data: winner } = api.prize.getPrizeWinner.useQuery({
+  const { data: winner } = api.prize.getWinner.useQuery({
     category: "SOCIETY",
   });
   if (!winner) return <LoadingSpinner />;
