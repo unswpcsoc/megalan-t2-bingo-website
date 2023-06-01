@@ -8,9 +8,6 @@ const Dashboard: NextPage = () => {
   const [prizeType, setPrizeType] = useState<TaskType>("SOCIETY");
   const [showWinner, setShowWinner] = useState(false);
 
-  useEffect(() => {
-    setShowWinner(true);
-  }, [prizeType]);
 
   return (
     <Layout>
@@ -30,7 +27,7 @@ const Dashboard: NextPage = () => {
         {/* Category Buttons */}
         <div className="grid grid-cols-3 gap-8 ">
           <button
-            onClick={() => setPrizeType("SOCIAL")}
+            onClick={() => {setPrizeType("SOCIAL"); setShowWinner(true);}}
             className={`flex max-w-md flex-col gap-4 rounded-xl p-4 text-white ${
               prizeType === "SOCIAL"
                 ? "bg-white/20"
@@ -40,7 +37,7 @@ const Dashboard: NextPage = () => {
             <h3 className="text-2xl font-bold">Social Media Quests</h3>
           </button>
           <button
-            onClick={() => setPrizeType("COSPLAY")}
+            onClick={() => {setPrizeType("COSPLAY");setShowWinner(true);}}
             className={`flex max-w-md flex-col gap-4 rounded-xl p-4 text-white ${
               prizeType === "COSPLAY"
                 ? "bg-white/20"
@@ -50,7 +47,7 @@ const Dashboard: NextPage = () => {
             <h3 className="text-2xl font-bold">Cosplay Quests</h3>
           </button>
           <button
-            onClick={() => setPrizeType("SOCIETY")}
+            onClick={() => {setPrizeType("SOCIETY");setShowWinner(true);}}
             className={`flex max-w-md flex-col gap-4 rounded-xl p-4 text-white ${
               prizeType === "SOCIETY"
                 ? "bg-white/20"
