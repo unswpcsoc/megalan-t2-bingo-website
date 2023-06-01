@@ -34,3 +34,20 @@ export const ClubNameSchema = z.enum([
   "SPONSOR",
   "COSPLAY",
 ]);
+
+export const TaskTypeSchema = z.enum(["SOCIETY", "SOCIAL", "COSPLAY"]);
+
+export const SocietyNameList = [
+  "PCS",
+  "ES",
+  "RS",
+  "KS",
+  "FGS",
+  "RGS",
+  "VRS",
+  "GS",
+  "MCS",
+  "PS",
+  "SBS",
+  "GDS",
+];
