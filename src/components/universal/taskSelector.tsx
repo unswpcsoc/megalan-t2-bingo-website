@@ -17,7 +17,7 @@ const TaskSelector = (
   // present a list of tasks in the society.
   const [selectedTask, setSelectedTask] = useState('');
 
-  const { data: taskList } = api.quests.getUserSocietyTasks.useQuery({
+  const { data: taskList } = api.quests.getUserSocietyCompletedTasks.useQuery({
     societyName: societyId,
     userId: userId
   });

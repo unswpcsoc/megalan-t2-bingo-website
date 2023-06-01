@@ -2,28 +2,24 @@ import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Layout from "../_layout";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
-import UserSearchBar from "~/components/universal/UserSearchBar";
 import { useState } from "react";
-import SocietySelector from "~/components/universal/societySelector";
+import SocietySelector from "~/components/universal/SocietySelector";
 import TaskSelector from "~/components/universal/TaskSelector";
 import { type ClubNamesType } from "~/components/types/clubs";
-// import UserCompletedTask from "~/components/universal/UserSocietyCompletedTasks";
 import SubmitButton from "~/components/universal/SubmitButton";
 import { type Task } from "@prisma/client";
+import UserSearchBar from "~/components/universal/UserSearchBar";
 
 const CompleteTask: NextPage = () => {
   // display some profile
-  const { status, data: session } = useSession();
+  const { data: session } = useSession();
   const [task, setTask] = useState<Task | null>(null);
   const [societyId, setSocietyId] = useState<ClubNamesType| null>(null);
   const [userId, setUserId] = useState('');
-  // const [refresh, setRefresh] = useState(false);
 
   const refresh = () => {
   window.location.reload();
   }
-
-
 
 
   // if unauthenticated, redirect to login page
