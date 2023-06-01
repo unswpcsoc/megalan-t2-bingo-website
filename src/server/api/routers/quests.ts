@@ -216,12 +216,11 @@ export const QuestsRouter = createTRPCRouter({
         task: {connect : {id: input.taskId}},    
       }}}});
 
-      // update the points of the user 
-
-      
-
-
-
+      // update the points of the user
+      await ctx.prisma.user.update({
+        where: {id:input.id},
+        data: {totalPoints : {increment : input.taskPoints}}
+      });
       return {status: "success"}
     } catch {
       return {status: "failed"}
