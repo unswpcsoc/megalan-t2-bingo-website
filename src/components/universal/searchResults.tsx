@@ -1,5 +1,3 @@
-import { NextComponentType } from "next";
-import React, { Ref } from "react";
 import { api } from "~/utils/api";
 
 

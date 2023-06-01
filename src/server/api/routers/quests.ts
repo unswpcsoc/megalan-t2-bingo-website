@@ -126,17 +126,37 @@ export const questsRouter = createTRPCRouter({
 
       const taskIds: string[] = [];
 
+      // a list of taskIds that a use has completed in a particular society
       completedTasks.forEach((task) => {
         taskIds.push(task.taskID);
       });
 
+      // the completed tasks
       const resultTasks = await ctx.prisma.task.findMany({
         where: {
           id: { in: taskIds },
         },
       });
 
-      return { tasks: resultTasks };
+      // get all the tasks in the society
+      const soc = await ctx.prisma.society.findFirst({
+        where: {
+          name: input.societyName,
+        },
+        include: {
+          tasks: true,
+        },
+      });
+
+      const incompleteTasks: Task[] = [];
+      soc?.tasks.forEach((task) => {
+        // if the task has not already been completed
+        if (!taskIds.includes(task.id)) {
+          incompleteTasks.push(task);
+        }
+      });
+
+      return { completedTasks: resultTasks, incompleteTasks: incompleteTasks };
     }),
 
   createQuest: adminProcedure
@@ -186,20 +206,33 @@ export const questsRouter = createTRPCRouter({
     }),
 
   completeTask: adminProcedure
-    .input(z.object({ id: z.string(), taskId: z.string() }))
+    .input(
+      z.object({ id: z.string(), taskId: z.string(), taskPoints: z.number() })
+    )
     .mutation(async ({ input, ctx }) => {
       // add the task to the users completed list.
-      await ctx.prisma.user.update({
-        where: { id: input.id },
-        data: {
-          completedTasks: {
-            create: {
-              authorisedBy: ctx.session.user.name,
-              task: { connect: { id: input.taskId } },
+      try {
+        await ctx.prisma.user.update({
+          where: { id: input.id },
+          data: {
+            completedTasks: {
+              create: {
+                authorisedBy: ctx.session.user.name,
+                task: { connect: { id: input.taskId } },
+              },
             },
           },
-        },
-      });
+        });
+
+        // update the points of the user
+        await ctx.prisma.user.update({
+          where: { id: input.id },
+          data: { totalPoints: { increment: input.taskPoints } },
+        });
+        return { status: "success" };
+      } catch {
+        return { status: "failed" };
+      }
     }),
 
   getUsers: adminProcedure

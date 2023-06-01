@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { api } from "~/utils/api";
 // import { createReactQueryHooks } from '@trpc/react';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
-import SearchResults from './searchResults';
+import SearchResults from './SearchResults';
+
+
 
 
 
