@@ -85,7 +85,6 @@ const Home: NextPage = () => {
                 societies participate in this LAN Party.
               </p>
             </Link>
-            <Link href='/admin/completeTask'>Complete a Task</Link>
           </div>
         </div>
       </main>
