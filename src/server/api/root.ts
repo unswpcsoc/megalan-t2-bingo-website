@@ -1,7 +1,8 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { validateRouter } from "./routers/validate";
 import { authenticationRouter } from "./routers/authentication";
-import { QuestsRouter } from "./routers/quests";
+import { prizeRouter } from "./routers/prize";
+import { questsRouter } from "./routers/quests";
 
 /**
  * This is the primary router for your server.
@@ -10,7 +11,8 @@ import { QuestsRouter } from "./routers/quests";
  */
 export const appRouter = createTRPCRouter({
   validate: validateRouter,
-  quests: QuestsRouter,
+  quests: questsRouter,
+  prize: prizeRouter,
   auth: authenticationRouter,
 });
 

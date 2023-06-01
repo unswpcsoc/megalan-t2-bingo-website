@@ -34,7 +34,7 @@ const TaskSelector = (
   return (
     <div className="mb-2 mt-2">
       <div className="w-full items-center text-center text-xl text-white">Select Task</div>
-      <div className=" w-full flex flex-row overflow-y-scroll items-center  ">
+      <div className=" w-full flex flex-row overflow-x-auto items-center  ">
         {taskList?.incompleteTasks.map((task: Task, index) => {
           return (
             <div key={index} className=" p-1 m-2">

@@ -34,7 +34,7 @@ const SocietySelector = (
   return (
     <div className="mb-2 mt-4">
       <div className="w-full items-center text-center text-xl text-white">Select Society </div>
-    <div className="flex flex-row align-middle items-center justify-start overflow-y-scroll ">
+    <div className="flex flex-row align-middle items-center justify-start overflow-x-auto ">
       {clubList?.clubs.map((club: { name: ClubNamesType; id: string }, index) => (
         <div
           key={index}
