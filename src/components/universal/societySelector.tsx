@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { api } from "~/utils/api";
-import NotLoggedIn from "./NotLoggedIn";
-import NotAdmin from "./notAdmin";
-import { type Session } from "next-auth";
 import { type ClubNamesType } from "../types/clubs";
 import { getSocietyNameType } from "../functions/getSocietyNameType";
 
 const SocietySelector = ({
-  session,
+  sessionId,
   setSocietyId,
 }: {
-  session: Session;
+  sessionId: string;
   setSocietyId: CallableFunction;
 }) => {
   // get all the societies the logged in user is an admin of.
   const { data: clubList } = api.quests.getAdminClubs.useQuery({
-    userID: session ? session.id : "",
+    userID: sessionId,
   });
   const [selectedCard, setSelectedCard] = useState<string>("");
 
@@ -28,9 +25,6 @@ const SocietySelector = ({
       setSocietyId(name);
     }
   };
-
-  if (!session) return <NotLoggedIn />;
-  if (session.type !== "ADMIN") return <NotAdmin />;
 
   return (
     <div className="mb-2 mt-4">

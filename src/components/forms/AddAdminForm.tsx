@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 import UserSearchBarAdmin from "src/components/universal/UserSearchBarAdmin";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
-const AddAdminForm = ({ session, doClose }: { session: Session, doClose: MouseEventHandler }) => {
+const AddAdminForm = ({ sessionId, doClose }: { sessionId: string, doClose: MouseEventHandler }) => {
   const [userId, setUserId] = useState("");
   const [societyId, setSocietyId] = useState<ClubNamesType | "">("");
   const [validDetails, setValidDetails] = useState(false);
@@ -25,7 +25,7 @@ const AddAdminForm = ({ session, doClose }: { session: Session, doClose: MouseEv
     setValidDetails(true);
     createAdminMutation
       .mutateAsync({
-        adminId: session.id,
+        adminId: sessionId,
         userId: userId,
         societyName: societyId,
       })
@@ -39,7 +39,7 @@ const AddAdminForm = ({ session, doClose }: { session: Session, doClose: MouseEv
         <h1 className="py-2 text-center text-xl md:text-left">Add New Admin</h1>
         {/* Search Bar for Finding Users */}
         <UserSearchBarAdmin setUserID={setUserId} />
-        <SocietySelector session={session} setSocietyId={setSocietyId} />
+        <SocietySelector sessionId={sessionId} setSocietyId={setSocietyId} />
         {/* Error Message if all details aren't entered */}
         {!validDetails && formSent && (
           <div className="flex flex-row space-x-2 rounded-lg border border-amber-500 bg-amber-900/40 px-4 py-4 text-amber-500">
