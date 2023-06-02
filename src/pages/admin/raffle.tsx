@@ -1,103 +1,79 @@
-import { api } from "~/utils/api";
+import { type NextPage } from "next";
 import Layout from "../_layout";
-import LoadingSpinner from "~/components/universal/LoadingSpinner";
-import React, { useEffect, useState } from "react";
-import Confetti from 'canvas-confetti';
-import { TaskType } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { type TaskType } from "@prisma/client";
+import Winner from "~/components/modal/Winner";
 
+const Dashboard: NextPage = () => {
+  const [prizeType, setPrizeType] = useState<TaskType | undefined>(undefined);
+  const [showWinner, setShowWinner] = useState(false);
 
+  useEffect(() => {
+    setShowWinner(true);
+  }, [prizeType]);
 
-
-// const Test = () => {
-//   const { data: winner } = api.prize.getWinner.useQuery({
-//     category: "SOCIETY",
-//   });
-
-//   if (!winner) return <LoadingSpinner />;
-//   return (
-//     <Layout>
-//       <main className="flex h-full w-full flex-col justify-center text-white">
-//         <h1>Hello</h1>
-//         <h1>{JSON.stringify(winner, null, 4)}</h1>
-//       </main>
-//     </Layout>
-//   );
-// };
-// export default Test;
-
-
-
-const RafflePage = () => {
 
   
 
-  const [category, setCategory]= useState<TaskType | undefined>(undefined);
-
-
-
-
-  const confettiSettings = {
-    particleCount: 500,
-    spread: 160,
-    startVelocity: 60,
-    gravity: 0.1,
-    colors: ['#ff0000', '#00ff00', '#0000ff'],
-    origin: {},
-    angle: 0
-  };
-
-
-  const throwConfetti = () => {
-    confettiSettings.origin = {x: 0, y: 1};
-    confettiSettings.angle = 90;
-    void Confetti(confettiSettings);
-    confettiSettings.origin = {x: 1, y: 1};
-    confettiSettings.angle = 160;
-    void Confetti(confettiSettings);
-    confettiSettings.origin = {x: 0, y: 0};
-    confettiSettings.angle = 0;
-    void Confetti(confettiSettings);
-    confettiSettings.origin = {x: 1, y: 0};
-    confettiSettings.angle = 180;
-    void Confetti(confettiSettings);
-
-  }
-
-  return (
-        <Layout>
-          <main className="flex h-full w-full flex-col justify-center text-white">
-            <h1>Hello</h1>
-            <h1>{JSON.stringify("vishnu", null, 4)}</h1>
-          </main>
-        </Layout>
-      );
-
-  // // void Confetti(confettiSettings);
-  // useEffect(() => {
-  //   // Initialize confetti
-  //   // Clean up confetti when component is unmounted
-  //   return () => {
-  //     Confetti.reset();
-  //   };
-  // }, []);
-
-  // list of three cards 
-
   return (
     <Layout>
-    <div className="h-screen flex items-center justify-center">
-    
+      {/* Winner Modal */}
+      {prizeType? 
+      <Winner
+        show={showWinner}
+        onClose={() => {
+          setShowWinner(false);
 
+        }}
+        category={prizeType}
+      /> : <></>}
 
+      <main className="flex min-h-screen flex-col items-center">
+        <div className="container mt-6 flex flex-col items-center justify-center gap-8 px-4 py-16 ">
+          {/*  Title  */}
+          <h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+            Prizes 🎣
+          </h1>
+        </div>
+        {/* Category Buttons */}
+        <div className="grid grid-cols-3 gap-8 ">
+          <button
+            onClick={() => setPrizeType("SOCIAL")}
+            className={`flex max-w-md flex-col gap-4 rounded-xl p-4 text-white ${
+              prizeType === "SOCIAL"
+                ? "bg-white/20"
+                : "bg-white/10 hover:bg-white/20"
+            }`}
+          >
+            <h3 className="text-2xl font-bold">Social Media Quests</h3>
+          </button>
 
+          <button
+            onClick={() => setPrizeType("COSPLAY")}
+            className={`flex max-w-md flex-col gap-4 rounded-xl p-4 text-white ${
+              prizeType === "COSPLAY"
+                ? "bg-white/20"
+                : "bg-white/10 hover:bg-white/20"
+            }`}
+          >
+            <h3 className="text-2xl font-bold">Cosplay Quests</h3>
+          </button>
 
+          <button
+            onClick={() => setPrizeType("SOCIETY")}
+            className={`flex max-w-md flex-col gap-4 rounded-xl p-4 text-white ${
+              prizeType === "SOCIETY"
+                ? "bg-white/20"
+                : "bg-white/10 hover:bg-white/20"
+            }`}
+          >
+            <h3 className="text-2xl font-bold">Society Quests</h3>
+          </button>
 
-     
-    </div>
+        </div>
+      </main>
     </Layout>
   );
 };
 
-export default RafflePage;
-
-
+export default Dashboard;
