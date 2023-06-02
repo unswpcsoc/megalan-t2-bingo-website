@@ -10,7 +10,7 @@ const Leaderboard: NextPage = () => {
   const [rank, setRank] = useState(-1);
   // api request to retrieve the leaderboard data and user's rank
   const {data: leaderboards} = api.quests.getLeaderboardStats.useQuery({
-    userID: session ? session.user.id : "" 
+    userID: session ? session.id : "" 
   })
 
   if (leaderboards && leaderboards.userIndex !== -1 && rank === -1) {

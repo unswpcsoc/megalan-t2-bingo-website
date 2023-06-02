@@ -275,7 +275,7 @@ export const questsRouter = createTRPCRouter({
 
       return cleanUsers;
     }),
-  getUserTasks: publicProcedure
+  getUserTasks: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
       const user = await ctx.prisma.user.findFirst({

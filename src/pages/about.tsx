@@ -70,18 +70,18 @@ const Home: NextPage = () => {
             MegaLAN will always make free tickets available for UNSW students
           </p>
           <h2 className="mt-4 text-left text-4xl font-extrabold tracking-tight text-white/90 sm:text-5xl">
-            💻 Website Developer
+            💻 Website Developers
           </h2>
-          <div className="my-4 flex h-fit flex-row space-x-4 rounded-lg bg-white/20 px-4 py-4 drop-shadow-md sm:space-x-6 sm:px-6">
+          <div className="my-4 flex h-fit flex-row space-x-4 rounded-lg bg-white/20 px-4 py-4 drop-shadow-md sm:space-x-6 sm:px-6  backdrop-blur-lg">
             <Image
               src="https://avatars.githubusercontent.com/u/100102134?s=400&u=d97f6a0bbbe82cd89eb1e889d8563014ae724081&v=4"
               alt="hehe-logo"
               height={80}
               width={80}
-              className=" my-auto flex-shrink-0 rounded-lg object-cover"
+              className="h-20 w-20 my-auto flex-shrink-0 rounded-lg object-cover"
             />
             <div className="flex flex-col space-y-1 py-2 text-white/90">
-              <h1 className="text-lg font-bold">Hari Pramod B</h1>
+              <h1 className="text-lg font-bold">Hari Pramod</h1>
               <a
                 href="https://github.com/HARI-PRMD"
                 className="flex flex-row space-x-2"
@@ -91,6 +91,32 @@ const Home: NextPage = () => {
               </a>
               <a
                 href="https://www.linkedin.com/in/hari-pramod-b-2b316b244/"
+                className="flex flex-row space-x-2"
+              >
+                <BsLinkedin className="h-5 w-5" />
+                <p className="font-medium">Linkedin</p>
+              </a>
+            </div>
+          </div>
+          <div className="my-4 flex h-fit flex-row space-x-4 rounded-lg bg-white/20 px-4 py-4 drop-shadow-md sm:space-x-6 sm:px-6  backdrop-blur-lg">
+            <Image
+              src="https://media.discordapp.net/attachments/937254069783892019/1114086695210590208/IMG_2966.jpg?width=671&height=1227"
+              alt="hehe-logo"
+              height={80}
+              width={80}
+              className="h-20 w-20 my-auto flex-shrink-0 rounded-lg object-cover"
+            />
+            <div className="flex flex-col space-y-1 py-2 text-white/90">
+              <h1 className="text-lg font-bold">Vishnu Prateek</h1>
+              <a
+                href="https://github.com/VishnuPrateek1"
+                className="flex flex-row space-x-2"
+              >
+                <BsGithub className="h-5 w-5" />
+                <p className="font-medium">Github</p>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/vishnuprateek/"
                 className="flex flex-row space-x-2"
               >
                 <BsLinkedin className="h-5 w-5" />

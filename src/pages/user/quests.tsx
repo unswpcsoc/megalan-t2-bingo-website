@@ -1,22 +1,26 @@
+"use client";
+
 import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useSession } from "next-auth/react";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import AllUserTasks from "~/components/universal/AllUserTasks";
 import { useRouter } from "next/router";
+// import NoAdminsAllowed from "~/components/universal/NoAdminsAllowed";
 
 const Quests: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   if (!session) return <NotLoggedIn />;
-
   // if the logged in user is an admin take them to their dashboard
-  if (session.type === "ADMIN")
+  if (session.type === "ADMIN") {
     router
       .push("/admin/dashboard")
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
+    // return <NoAdminsAllowed />;
+  }
 
   return (
     <Layout>
@@ -28,7 +32,7 @@ const Quests: NextPage = () => {
           </h1>
           {/* Leaderboard Table */}
           <div className="w-full rounded-lg">
-            <AllUserTasks userId={session.user.id} />
+            <AllUserTasks userId={session.id} />
           </div>
         </div>
       </main>
