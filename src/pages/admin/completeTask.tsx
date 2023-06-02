@@ -7,7 +7,7 @@ import { type ClubNamesType } from "~/components/types/clubs";
 import SubmitButton from "~/components/universal/SubmitButton";
 import { type Task } from "@prisma/client";
 import UserSearchBar from "~/components/universal/UserSearchBar";
-import SocietySelector from "~/components/universal/societySelector";
+import SocietySelector from "~/components/universal/SocietySelector";
 import TaskSelector from "~/components/universal/taskSelector";
 
 
