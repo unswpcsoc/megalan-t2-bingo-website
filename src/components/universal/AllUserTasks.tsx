@@ -8,7 +8,7 @@ const AllUserTasks = ({ userId }: { userId: string }) => {
     userId: userId,
   });
 
-  // if the tasks havent loaded yet then show loading spinner
+  // if the tasks haven't loaded yet then show loading spinner
   if (!taskData) return <LoadingSpinner />;
 
   // return all completed and incomplete tasks
