@@ -5,7 +5,7 @@ import UserTaskCard from "./UserTaskCard";
 const AllUserTasks = ({ userId }: { userId: string }) => {
   // get users tasks
   const { data: taskData } = api.quests.getUserTasks.useQuery({
-    userId,
+    userId: userId,
   });
 
   // if the tasks havent loaded yet then show loading spinner

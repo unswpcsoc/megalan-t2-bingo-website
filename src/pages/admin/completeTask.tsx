@@ -34,7 +34,7 @@ const CompleteTask: NextPage = () => {
   return (
     <Layout>
       <main className="flex min-h-screen flex-col items-center ">
-        <div className="container h-full mt-16 flex flex-col justify-center items-center px-4 py-2 ">
+        <div className="container h-full mt-20 flex flex-col justify-center items-center px-4 py-2 ">
           <h1 className="text-center text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Complete Quests 🔱
           </h1>

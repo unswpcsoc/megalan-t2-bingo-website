@@ -38,7 +38,7 @@ const SocietySelector = (
         <div
           key={index}
           className={`m-2 p-4 rounded-xl backdrop-blur-md
-          ${selectedCard === club.id ? 'border-green-500 text-green-500 border-4 shadow-xl bg-green-900/20' : 'text-white border-gray-300 border'
+          ${selectedCard === club.id ? 'border-green-500 text-green-500 border-4 shadow-xl bg-green-900/20' : 'text-white border-gray-300 bg-white/5 border'
             }`}
           onClick={() => handleCardClick(club.id, club.name)}
         >
