@@ -68,8 +68,8 @@ const AdminTasks: NextPage = () => {
               </h1>
             ) : (
               <>
-                <div className="flex w-full flex-col items-center text-2xl font-bold text-white">
-                  <h3>Displaying Tasks for:</h3>
+                <div className="flex w-full flex-col text-2xl text-white">
+                  <h3 className="font-bold">Displaying Tasks for:</h3>
                   {clubList?.clubs.map((club: CleanClubDataType, index) => {
                     return (
                       <li key={index} className="text-lg">
@@ -81,21 +81,20 @@ const AdminTasks: NextPage = () => {
                 <div className="flex w-full flex-row justify-between">
                   <div className="px-2 text-white">
                     <h1 className="text-4xl font-bold">Tasks</h1>
-                    <div className="flex flex-row space-x-2 pt-2">
-                      <InformationCircleIcon className="h-6 w-6" />
-                      <p>
-                        Reload the Page if you aren&apos;t seeing your task
-                        changes
-                      </p>
-                    </div>
                   </div>
                   <button
                     className="mx-2 flex h-fit flex-row space-x-2 rounded-lg border border-green-500 bg-green-900/40 p-2 text-green-500"
                     onClick={() => setShowCreateTask(!showCreateTask)}
                   >
                     <h1>Create Task</h1>
-                    <PlusIcon className="h-6 w-6 " />
+                    <PlusIcon className="h-6 w-6" />
                   </button>
+                </div>
+                <div className="flex flex-row space-x-2 pt-2 text-white">
+                  <InformationCircleIcon className="h-6 w-6" />
+                  <p>
+                    Reload the Page if you aren&apos;t seeing your task changes
+                  </p>
                 </div>
               </>
             )}
