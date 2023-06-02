@@ -15,7 +15,6 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { useImperativeHandle } from "react";
 
 export const questsRouter = createTRPCRouter({
   // Gets a list of all users participating and admins
