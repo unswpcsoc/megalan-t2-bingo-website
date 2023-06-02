@@ -9,6 +9,7 @@ import { type Task } from "@prisma/client";
 import UserSearchBar from "~/components/universal/UserSearchBar";
 import SocietySelector from "~/components/universal/SocietySelector";
 import TaskSelector from "~/components/universal/taskSelector";
+import NotAdmin from "~/components/universal/notAdmin";
 
 
 const CompleteTask: NextPage = () => {
@@ -25,6 +26,7 @@ const CompleteTask: NextPage = () => {
 
   // if unauthenticated, redirect to login page
   if (!session) return <NotLoggedIn />;
+  if (session.type !== "ADMIN") return <NotAdmin />;
 
   // First step: Pick User
 
@@ -40,7 +42,7 @@ const CompleteTask: NextPage = () => {
           </h1>
           <div className="flex w-full flex-col justify-start items-stretch h-full py-5">
             <UserSearchBar setUserID={setUserId}/>
-            <SocietySelector setSocietyId={setSocietyId} session={session}/>
+            <SocietySelector setSocietyId={setSocietyId} sessionId={session.id}/>
             {societyId === null || userId === "" ? <></> : <TaskSelector userId={userId} setTask={setTask} societyId={societyId}/>}
             <SubmitButton taskId={task?.id} userId={userId} taskPoints={task?.points} refresh={refresh}/>
           </div>
