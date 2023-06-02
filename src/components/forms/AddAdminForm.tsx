@@ -1,6 +1,6 @@
 import { type MouseEventHandler, useState } from "react";
 import { type ClubNamesType } from "../types/clubs";
-import SocietySelector from "../universal/societySelector";
+import SocietySelector from "../universal/SocietySelector";
 import { getSocietyNameType } from "../functions/getSocietyNameType";
 import { type Session } from "next-auth";
 import { api } from "~/utils/api";

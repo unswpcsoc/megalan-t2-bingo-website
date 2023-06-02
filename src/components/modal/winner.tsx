@@ -71,7 +71,7 @@ const Winner = ({
     </>);}
 
   // let wList: string[] = [] 
-  const l = winner?.user?.name;
+  const l = winner?.user.name;
 
   setTimeout(() => {
     if (l) {

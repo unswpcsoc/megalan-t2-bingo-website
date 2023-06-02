@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import SearchResults from './SearchResults';
 import SearchResultsAdmin from './SearchResultsAdmin';
 // import { createReactQueryHooks } from '@trpc/react';
 

@@ -2,7 +2,6 @@ import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { type CleanClubDataType, type ClubNamesType } from "../types/clubs";
 import { getSocietyNameType } from "../functions/getSocietyNameType";
-import { api } from "~/utils/api";
 
 const CreateTaskForm = ({
   onChange,
