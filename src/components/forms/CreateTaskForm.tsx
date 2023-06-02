@@ -21,26 +21,28 @@ const CreateTaskForm = ({
       points: { value: number };
       society: { value: ClubNamesType };
     };
+
     if (!submit) onChange(false);
-    if (!(target.points.value === 100 || target.points.value === 200))
-      setValidPoints(false);
+    target.points.value == 100 || target.points.value == 200
+      ? setValidPoints(true)
+      : setValidPoints(false);
     if (
-      !(
-        target.name.value &&
-        (target.points.value === 100 || target.points.value === 200)
-      )
+      target.name.value == "" ||
+      (target.points.value != 100 && target.points.value != 200)
     ) {
       // display error for 5 seconds
       setError(true);
       setTimeout(() => {
         setError(false);
       }, 5000);
+      return;
     } else {
       onChange({
         name: target.name.value,
         points: target.points.value,
         society: target.society.value,
       });
+      return;
     }
   };
 
