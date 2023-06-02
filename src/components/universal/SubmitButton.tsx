@@ -27,7 +27,7 @@ const SubmitButton = ({ taskId, taskPoints, userId, refresh }:
     setTimeout(() => {
       closeModal();
       refresh();
-    }, 1000);
+    }, 100);
   }
 
   const openModal = () => {

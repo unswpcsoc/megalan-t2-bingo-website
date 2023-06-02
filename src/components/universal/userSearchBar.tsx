@@ -15,7 +15,7 @@ const UserSearchBar = ({setUserID} : {setUserID: CallableFunction}) => {
       const fetchedResults = ['Result 1', 'Result 2', 'Result 3'];
       setResults(fetchedResults);
       setIsOpen(true);
-    }, 1000);
+    }, 100);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
