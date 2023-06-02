@@ -2,8 +2,8 @@ import { useState, type MouseEventHandler } from "react";
 import { type TaskType } from "@prisma/client";
 import { DisplayTaskType } from "../functions/displayTaskType";
 import { api } from "~/utils/api";
-import LoadingSpinner from "../universal/LoadingSpinner";
 import Confetti from "canvas-confetti";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 const Winner = ({
