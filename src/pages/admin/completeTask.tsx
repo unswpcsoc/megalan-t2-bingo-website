@@ -1,15 +1,15 @@
 import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Layout from "../_layout";
-import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import { useState } from "react";
 import { type ClubNamesType } from "~/components/types/clubs";
-import SubmitButton from "~/components/universal/SubmitButton";
 import { type Task } from "@prisma/client";
-import UserSearchBar from "~/components/universal/UserSearchBar";
+import NotLoggedIn from "~/components/NotLoggedIn";
 import SocietySelector from "~/components/SocietySelector";
-import TaskSelector from "~/components/universal/taskSelector";
-import NotAdmin from "~/components/universal/notAdmin";
+import SubmitButton from "~/components/SubmitButton";
+import UserSearchBar from "~/components/UserSearchBar";
+import NotAdmin from "~/components/notAdmin";
+import TaskSelector from "~/components/taskSelector";
 
 
 const CompleteTask: NextPage = () => {

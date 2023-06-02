@@ -3,7 +3,7 @@ import Layout from "./_layout";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import LoadingSpinner from "~/components/universal/LoadingSpinner";
+import LoadingSpinner from "~/components/LoadingSpinner";
 
 const Leaderboard: NextPage = () => {
   const { data: session } = useSession();

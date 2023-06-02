@@ -1,14 +1,14 @@
 import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useSession } from "next-auth/react";
-import NotLoggedIn from "~/components/universal/NotLoggedIn";
-import NotAdmin from "~/components/universal/notAdmin";
 import AddAdminForm from "~/components/forms/AddAdminForm";
-import AllClubAdmins from "~/components/universal/AllClubAdmins";
 import { api } from "~/utils/api";
-import LoadingSpinner from "~/components/universal/LoadingSpinner";
 import { useState } from "react";
 import { PlusIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
+import AllClubAdmins from "~/components/AllClubAdmins";
+import LoadingSpinner from "~/components/LoadingSpinner";
+import NotLoggedIn from "~/components/NotLoggedIn";
+import NotAdmin from "~/components/notAdmin";
 
 const Users: NextPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -58,7 +58,7 @@ const Users: NextPage = () => {
             {showForm && (
               <AddAdminForm
                 doClose={() => setShowForm(false)}
-                session={session}
+                sessionId={session.id}
               />
             )}
             {!showForm && (

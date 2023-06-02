@@ -1,12 +1,12 @@
 import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useSession } from "next-auth/react";
-import NotLoggedIn from "~/components/universal/NotLoggedIn";
-import NotAdmin from "~/components/universal/notAdmin";
 import Link from "next/link";
 import { api } from "~/utils/api";
 import { getSocietyNameType } from "~/components/functions/getSocietyNameType";
 import { type ClubNamesType } from "~/components/types/clubs";
+import NotLoggedIn from "~/components/NotLoggedIn";
+import NotAdmin from "~/components/notAdmin";
 
 const AdminDashboard: NextPage = () => {
   const { data: session } = useSession();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { api } from "~/utils/api";
-import { type ClubNamesType } from "../types/clubs";
+import { type ClubNamesType } from "./types/clubs";
 import TaskCard from "./TaskCard";
 import UserCompletedTask from "./UserCompletedTasks";
 import { type Task } from "@prisma/client";

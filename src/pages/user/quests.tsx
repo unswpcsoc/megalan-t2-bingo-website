@@ -3,9 +3,9 @@
 import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useSession } from "next-auth/react";
-import NotLoggedIn from "~/components/universal/NotLoggedIn";
-import AllUserTasks from "~/components/universal/AllUserTasks";
 import { useRouter } from "next/router";
+import AllUserTasks from "~/components/AllUserTasks";
+import NotLoggedIn from "~/components/NotLoggedIn";
 // import NoAdminsAllowed from "~/components/universal/NoAdminsAllowed";
 
 const Quests: NextPage = () => {

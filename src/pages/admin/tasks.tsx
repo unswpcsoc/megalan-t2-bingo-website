@@ -4,16 +4,16 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import CreateTaskForm from "~/components/forms/CreateTaskForm";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import NotAdmin from "~/components/universal/notAdmin";
-import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import { api } from "~/utils/api";
 import {
   type CleanClubDataType,
   type ClubNamesType,
 } from "~/components/types/clubs";
 import { getSocietyNameType } from "~/components/functions/getSocietyNameType";
-import AllTasks from "~/components/universal/AllTasks";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import AllTasks from "~/components/AllTasks";
+import NotLoggedIn from "~/components/NotLoggedIn";
+import NotAdmin from "~/components/notAdmin";
 
 const AdminTasks: NextPage = () => {
   const { data: session } = useSession();
