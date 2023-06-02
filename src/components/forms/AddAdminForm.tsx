@@ -1,8 +1,7 @@
 import { type MouseEventHandler, useState } from "react";
 import { type ClubNamesType } from "../types/clubs";
-import SocietySelector from "../universal/SocietySelector";
+import { SocietySelector } from "../universal/SocietySelector";
 import { getSocietyNameType } from "src/components/functions/getSocietyNameType";
-import { type Session } from "next-auth";
 import { api } from "~/utils/api";
 import UserSearchBarAdmin from "src/components/universal/UserSearchBarAdmin";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";

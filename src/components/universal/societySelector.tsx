@@ -3,7 +3,7 @@ import { api } from "~/utils/api";
 import { type ClubNamesType } from "../types/clubs";
 import { getSocietyNameType } from "../functions/getSocietyNameType";
 
-const SocietySelector = ({
+export const SocietySelector = ({
   sessionId,
   setSocietyId,
 }: {
