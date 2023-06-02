@@ -1,10 +1,10 @@
 import { type MouseEventHandler, useState } from "react";
 import { type ClubNamesType } from "../types/clubs";
-import SocietySelector from "../universal/SocietySelector";
-import { getSocietyNameType } from "../functions/getSocietyNameType";
+import SocietySelector from "src/components/universal/SocietySelector";
+import { getSocietyNameType } from "src/components/functions/getSocietyNameType";
 import { type Session } from "next-auth";
 import { api } from "~/utils/api";
-import UserSearchBarAdmin from "../universal/UserSearchBarAdmin";
+import UserSearchBarAdmin from "src/components/universal/UserSearchBarAdmin";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 
 const AddAdminForm = ({ session, doClose }: { session: Session, doClose: MouseEventHandler }) => {
