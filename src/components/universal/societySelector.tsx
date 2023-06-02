@@ -1,10 +1,11 @@
+"use client"
 import React, { useState } from "react";
 import { api } from "~/utils/api";
 import { type ClubNamesType } from "../types/clubs";
 import { getSocietyNameType } from "../functions/getSocietyNameType";
 
-export const SocietySelector = ({
-  sessionId,
+const SocietySelector = ({
+sessionId,
   setSocietyId,
 }: {
   sessionId: string;
