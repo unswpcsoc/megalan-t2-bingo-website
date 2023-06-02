@@ -31,8 +31,8 @@ const AdminDashboard: NextPage = () => {
             {session.user.name}&apos;s Admin Dashboard 🦈
           </h1>
         </div>
-        <div className="pb-8 text-2xl font-bold text-white">
-          <h3>You are club admin for:</h3>
+        <div className="pb-8 text-2xl text-white">
+          <h3 className="font-bold">You are club admin for:</h3>
           {clubList?.clubs.map(
             (club: { name: ClubNamesType; id: string }, index) => {
               return (
@@ -43,7 +43,7 @@ const AdminDashboard: NextPage = () => {
             }
           )}
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 pb-12 px-4">
           <Link
             className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
             href="/admin/tasks"

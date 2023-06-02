@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SearchResults from './SearchResults';
+import SearchResultsAdmin from './SearchResultsAdmin';
 // import { createReactQueryHooks } from '@trpc/react';
 
-const UserSearchBar = ({setUserID} : {setUserID: CallableFunction}) => {
+const UserSearchBarAdmin = ({setUserID} : {setUserID: CallableFunction}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -50,11 +51,11 @@ const UserSearchBar = ({setUserID} : {setUserID: CallableFunction}) => {
       </div>
       {results.length > 0 && isOpen && searchQuery !== "" && (
           <div ref={dropdownRef} className=" z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-            <SearchResults setUserID={setUserID} searchString={searchQuery} setResults={setResults} setSearchQuery={setSearchQuery}/>
+            <SearchResultsAdmin setUserID={setUserID} searchString={searchQuery} setResults={setResults} setSearchQuery={setSearchQuery}/>
             </div>
           )}
     </form>
 
   )
 };
-export default UserSearchBar;
+export default UserSearchBarAdmin;
