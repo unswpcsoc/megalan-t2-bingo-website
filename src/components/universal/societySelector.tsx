@@ -1,4 +1,3 @@
-"use client"
 import React, { useState } from "react";
 import { api } from "~/utils/api";
 import { type ClubNamesType } from "../types/clubs";
