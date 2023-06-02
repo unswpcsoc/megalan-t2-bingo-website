@@ -11,12 +11,17 @@ import { type ClubNamesType } from "~/components/types/clubs";
 const AdminDashboard: NextPage = () => {
   const { data: session } = useSession();
 
+
+
   const { data: clubList } = api.quests.getAdminClubs.useQuery({
     userID: session ? session.id : "",
   });
 
   if (!session) return <NotLoggedIn />;
   if (session.type !== "ADMIN") return <NotAdmin />;
+
+
+
 
   return (
     <Layout>

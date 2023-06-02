@@ -2,6 +2,7 @@ import { TaskTypeSchema } from "~/components/types/clubs";
 import { adminProcedure, createTRPCRouter } from "../trpc";
 import { z } from "zod";
 import { generateNumber } from "~/server/functions/randomNumber";
+import { prisma } from "~/server/db";
 
 
 const fisherYatesShuffle = (array: string[]): string[] => {
@@ -31,6 +32,9 @@ export const prizeRouter = createTRPCRouter({
           task: {
             type: input.category,
           },
+          user: {
+            type: "PARTICIPANT"
+          }
         },
         include: {
           task: {
@@ -47,7 +51,15 @@ export const prizeRouter = createTRPCRouter({
       });
 
       const winnerList = fisherYatesShuffle(raffle);
+      console.log(winnerList);
+
+      if (winnerList.length === 0) return {user: null}
+
+      // get  the winners name
+      const name = await prisma.user.findFirstOrThrow({ where: {id: winnerList[0]}});
+      console.log(name);
+
       // returns the first 10 winners
-      return {winners: winnerList.slice(0, 10)};
+      return {user: name};
     }),
 });

@@ -7,4 +7,5 @@ export const DisplayTaskType = (category: TaskType) => {
     COSPLAY: "Cosplay",
   };
   return data[category];
+
 };
