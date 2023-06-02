@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useEffect, useState } from "react";
 import { type TaskType } from "@prisma/client";
-import Winner from "~/components/modal/Winner";
+import Winner from "~/components/modal/WinnerModal";
 
 const Dashboard: NextPage = () => {
   const [prizeType, setPrizeType] = useState<TaskType | undefined>(undefined);
