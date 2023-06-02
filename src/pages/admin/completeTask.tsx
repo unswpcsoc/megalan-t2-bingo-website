@@ -3,12 +3,13 @@ import { useSession } from "next-auth/react";
 import Layout from "../_layout";
 import NotLoggedIn from "~/components/universal/NotLoggedIn";
 import { useState } from "react";
-import SocietySelector from "~/components/universal/SocietySelector";
-import TaskSelector from "~/components/universal/TaskSelector";
 import { type ClubNamesType } from "~/components/types/clubs";
 import SubmitButton from "~/components/universal/SubmitButton";
 import { type Task } from "@prisma/client";
-import UserSearchBar from "~/components/universal/UserSearchBar";
+import UserSearchBar from "~/components/universal/userSearchBar";
+import SocietySelector from "~/components/universal/societySelector";
+import TaskSelector from "~/components/universal/taskSelector";
+
 
 const CompleteTask: NextPage = () => {
   // display some profile

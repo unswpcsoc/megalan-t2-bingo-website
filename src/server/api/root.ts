@@ -3,6 +3,7 @@ import { validateRouter } from "./routers/validate";
 import { authenticationRouter } from "./routers/authentication";
 import { prizeRouter } from "./routers/prize";
 import { questsRouter } from "./routers/quests";
+import { adminRouter } from "./routers/admin";
 
 /**
  * This is the primary router for your server.
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   quests: questsRouter,
   prize: prizeRouter,
   auth: authenticationRouter,
+  admin: adminRouter,
 });
 
 // export type definition of API

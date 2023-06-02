@@ -17,7 +17,7 @@ datasource db {
 
 model Society {
     id     String   @id @default(cuid())
-    name   ClubType
+    name   ClubType @unique
     admins User[]
     tasks  Task[]
 }

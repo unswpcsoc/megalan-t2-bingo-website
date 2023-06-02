@@ -17,7 +17,26 @@ import {
 } from "~/server/api/trpc";
 
 export const questsRouter = createTRPCRouter({
-  // TODO: Gets the quests that a user has completed and not completed
+  // Gets a list of all users participating and admins
+  getAllUsers: adminProcedure
+    .input(z.object({ name: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const resultUsers = await ctx.prisma.user.findMany({
+        orderBy: {
+          name: "asc",
+        },
+        where: {
+          name: { contains: input.name, mode: "insensitive" },
+        },
+      });
+
+      const cleanUsers = resultUsers.map((user) => {
+        return { name: user.name, id: user.id };
+      });
+
+      return cleanUsers;
+    }),
+
   getUserQuests: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
@@ -253,7 +272,6 @@ export const questsRouter = createTRPCRouter({
       const cleanUsers = resultUsers.map((user) => {
         return { name: user.name, id: user.id };
       });
-      console.log(cleanUsers);
 
       return cleanUsers;
     }),

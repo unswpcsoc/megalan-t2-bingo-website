@@ -13,6 +13,7 @@ const CreateTaskForm = ({
 }) => {
   const [submit, setSubmit] = useState(false);
   const [error, setError] = useState(false);
+  const [validPoints, setValidPoints] = useState(false);
 
   const handleFormSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -22,7 +23,14 @@ const CreateTaskForm = ({
       society: { value: ClubNamesType };
     };
     if (!submit) onChange(false);
-    if (!(target.name.value && target.points.value)) {
+    if (!(target.points.value === 100 || target.points.value === 200))
+      setValidPoints(false);
+    if (
+      !(
+        target.name.value &&
+        (target.points.value === 100 || target.points.value === 200)
+      )
+    ) {
       // display error for 5 seconds
       setError(true);
       setTimeout(() => {
@@ -107,7 +115,12 @@ const CreateTaskForm = ({
       {error && (
         <div className="flex flex-row space-x-2 rounded-lg border border-amber-500 bg-amber-900/40 px-4 py-4 text-amber-500">
           <ExclamationCircleIcon className="mt-[1px] h-6 w-6" />
-          <h1 className="text-lg">Please Enter All the Details</h1>
+          <div>
+            <p className="text-lg">Please Enter All the Details</p>
+            {!validPoints && (
+              <p className="text-lg">Please use either 100 or 200 points</p>
+            )}
+          </div>
         </div>
       )}
       {/* Submit Button */}
