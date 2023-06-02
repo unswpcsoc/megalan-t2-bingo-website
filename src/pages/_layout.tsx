@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import atlantis from "public/images/atlantis1.jpg";
+import atlantis from "public/images/atlantis.jpg";
 import Header from "~/components/Header";
 
 interface LayoutProps {
