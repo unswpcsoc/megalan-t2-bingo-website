@@ -1,7 +1,7 @@
 import { api } from "~/utils/api";
-import { getSocietyNameType } from "../functions/getSocietyNameType";
-import { type ClubNamesType } from "../types/clubs";
 import LoadingSpinner from "./LoadingSpinner";
+import { getSocietyNameType } from "./functions/getSocietyNameType";
+import { type ClubNamesType } from "./types/clubs";
 
 const AllClubAdmins = ({ societyName }: { societyName: ClubNamesType }) => {
   const { data: club } = api.admin.getAllAdminsOfClub.useQuery({

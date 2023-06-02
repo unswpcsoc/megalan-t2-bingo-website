@@ -3,8 +3,8 @@ import { type ClubNamesType } from "../types/clubs";
 import SocietySelector from "../SocietySelector";
 import { getSocietyNameType } from "src/components/functions/getSocietyNameType";
 import { api } from "~/utils/api";
-import UserSearchBarAdmin from "src/components/universal/UserSearchBarAdmin";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
+import UserSearchBarAdmin from "../UserSearchBarAdmin";
 
 const AddAdminForm = ({ sessionId, doClose }: { sessionId: string, doClose: MouseEventHandler }) => {
   const [userId, setUserId] = useState("");

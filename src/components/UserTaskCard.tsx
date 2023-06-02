@@ -1,5 +1,6 @@
-import { getSocietyNameType } from "../functions/getSocietyNameType";
-import { type ClubNamesType } from "../types/clubs";
+import { getSocietyNameType } from "./functions/getSocietyNameType";
+import { type ClubNamesType } from "./types/clubs";
+
 
 const UserTaskCard = ({
   task,

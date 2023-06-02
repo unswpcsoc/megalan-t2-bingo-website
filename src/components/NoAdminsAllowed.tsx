@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Layout from "../../pages/_layout";
+import Layout from "~/pages/_layout";
 
 const NoAdminsAllowed = () => {
   return (
