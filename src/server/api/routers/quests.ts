@@ -15,6 +15,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { useImperativeHandle } from "react";
 
 export const questsRouter = createTRPCRouter({
   // Gets a list of all users participating and admins
@@ -278,6 +279,51 @@ export const questsRouter = createTRPCRouter({
   getUserTasks: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
+
+      const userTasks = await ctx.prisma.user.findFirst({
+        where: { id: input.userId},
+        include: {completedTasks: {include: {task: {include: {Society: true}}}}}
+      });
+
+      const cTasks:string[] = [];
+      userTasks?.completedTasks.forEach((task) => {
+        cTasks.push(task.taskID);
+      });
+
+      const incompleteTasks = await ctx.prisma.task.findMany({
+        where: {NOT : {id: {in: cTasks}}},
+        include: {Society: true}
+      });
+
+      const allcompleteTasks: 
+      { name: string; points: number; id: string, societyName: ClubNamesType | undefined }[] =
+      [];
+      userTasks?.completedTasks.forEach((task) => {
+        const t = task.task
+        
+        allcompleteTasks.push({
+          name: t.name,
+          points: t.points,
+          id: t.id,
+          societyName: t.Society?.name
+        });
+      });
+
+      const allInCompleteTasks: 
+      { name: string; points: number; id: string, societyName: ClubNamesType | undefined }[] =
+      [];
+
+      incompleteTasks.forEach((task) => {
+        allInCompleteTasks.push({
+          name: task.name,
+          points: task.points,
+          id: task.id,
+          societyName: task.Society?.name
+        });
+      });
+
+      return{incomplete: allInCompleteTasks, complete: allcompleteTasks}
+    /* 
       const user = await ctx.prisma.user.findFirst({
         where: {
           id: input.userId,
@@ -299,6 +345,13 @@ export const questsRouter = createTRPCRouter({
       user.completedTasks.forEach((task) => {
         completedTasksQuery.push({ id: task.taskID });
       });
+
+      // get all the tasks the user has completed
+
+
+
+
+
       // get all task objects from with full task details
       const completedTasks = await ctx.prisma.task.findMany({
         where: {
@@ -329,7 +382,9 @@ export const questsRouter = createTRPCRouter({
       // get incomplete tasks as well
       const tasks = await ctx.prisma.task.findMany({
         where: {
-          OR: allTasksQuery,
+          NOT: {
+            OR: allTasksQuery,
+          } 
         },
       });
 
@@ -342,5 +397,7 @@ export const questsRouter = createTRPCRouter({
       });
       // return the completed and incomplete tasks separately
       return { incomplete: allIncompleteTasks, complete: allcompleteTasks };
+      */
     }),
+    
 });
