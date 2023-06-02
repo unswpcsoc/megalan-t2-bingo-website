@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Header from "~/components/universal/Header";
 import Image from "next/image";
 import atlantis from "public/images/atlantis1.jpg";
+import Header from "~/components/Header";
 
 interface LayoutProps {
   children: React.ReactNode;
