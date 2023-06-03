@@ -1,7 +1,8 @@
 import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
+import { env } from "process";
 
-export const SendVerificationEmail = (
+export const SendVerificationEmailV1 = (
   emailId: string,
   name: string
 ): { status: boolean; code: string } => {
@@ -11,8 +12,8 @@ export const SendVerificationEmail = (
     port: 465,
     secure: true,
     auth: {
-      user: process.env.EMAIL_ID,
-      pass: process.env.EMAIL_PASSWORD,
+      user: env.EMAIL_ID,
+      pass: env.EMAIL_PASSWORD,
     },
   });
 
@@ -37,7 +38,7 @@ export const SendVerificationEmail = (
   return { status: sendSuccess, code: verificationCode };
 };
 
-export const SendForgotPasswordEmail = (
+export const SendForgotPasswordEmailV1 = (
   emailId: string,
   name: string
 ): { status: boolean; code: string } => {

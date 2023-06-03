@@ -2,8 +2,8 @@ import { z } from "zod";
 import axios from "axios";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { SendVerificationEmail } from "./verificationEmail";
 import { TRPCError } from "@trpc/server";
+import { SendVerificationEmail } from "./EmailSenderV2";
 
 export const validateRouter = createTRPCRouter({
   isUserUnique: publicProcedure
@@ -58,8 +58,8 @@ export const validateRouter = createTRPCRouter({
 
   sendVerificationCode: publicProcedure
     .input(z.object({ email: z.string().email(), name: z.string() }))
-    .mutation(({ input }): { status: boolean; code: string } => {
-      const res = SendVerificationEmail(input.email, input.name);
+    .mutation(async ({ input }) => {
+      const res = await SendVerificationEmail(input.email, input.name);
       return { status: res.status, code: res.code };
     }),
 });

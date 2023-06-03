@@ -28,6 +28,7 @@ export const env = createEnv({
     EMAIL_PASSWORD: z.string().min(1),
     EVENTBRITE_EVENT_ID: z.string().min(1),
     EVENTBRITE_PERSONAL_OAUTH_TOKEN: z.string().min(1),
+    SENDGRID_API_KEY: z.string().min(1),
   },
 
   /**
@@ -55,5 +56,6 @@ export const env = createEnv({
     EVENTBRITE_EVENT_ID: process.env.EVENTBRITE_EVENT_ID,
     EVENTBRITE_PERSONAL_OAUTH_TOKEN:
       process.env.EVENTBRITE_PERSONAL_OAUTH_TOKEN,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   },
 });

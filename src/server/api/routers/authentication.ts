@@ -5,8 +5,8 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "~/server/api/trpc";
-import { SendForgotPasswordEmail } from "./verificationEmail";
 import { TRPCError } from "@trpc/server";
+import { SendForgotPasswordEmail } from "./EmailSenderV2";
 
 export const authenticationRouter = createTRPCRouter({
   login: publicProcedure
@@ -67,7 +67,7 @@ export const authenticationRouter = createTRPCRouter({
       });
       if (!user)
         throw new TRPCError({ code: "NOT_FOUND", message: "User not found" });
-      const res = SendForgotPasswordEmail(user.email, user.name);
+      const res = await SendForgotPasswordEmail(user.email, user.name);
       return { status: true, code: res.code };
     }),
 
