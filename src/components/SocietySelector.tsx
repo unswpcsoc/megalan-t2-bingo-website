@@ -36,7 +36,7 @@ sessionId,
           (club: { name: ClubNamesType; id: string }, index) => (
             <div
               key={index}
-              className={`m-2 rounded-xl p-4 backdrop-blur-md
+              className={`m-2 rounded-xl p-4 backdrop-blur-md w-fit h-
           ${
             selectedCard === club.id
               ? "border-4 border-green-500 bg-green-900/20 text-green-500 shadow-xl"
@@ -47,7 +47,7 @@ sessionId,
               <h2 className="whitespace-nowrap text-lg font-bold">
                 {getSocietyNameType(club.name).name}
               </h2>
-              <p className="mt-2">{"this is the clubs description"}</p>
+              {/* <p className="mt-2">{"this is the clubs d}</p> */}
             </div>
           )
         )}
