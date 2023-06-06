@@ -7,6 +7,9 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * Layout for consistent styling across all pages
+ */
 const Layout = ({ children }: LayoutProps) => {
   return (
     <>

@@ -4,6 +4,9 @@ import Link from "next/link";
 import Layout from "./_layout";
 import { useSession } from "next-auth/react";
 
+/**
+ * Standard Home Page
+ */
 const Home: NextPage = () => {
   const { data: session } = useSession();
   return (
@@ -24,7 +27,7 @@ const Home: NextPage = () => {
               </p>
             </div>
             <Link
-              className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 border border-white p-4 text-white backdrop-blur-lg"
+              className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
               href="/leaderboard"
             >
               <h3 className="text-2xl font-bold">Quests Leaderboard →</h3>
@@ -35,7 +38,7 @@ const Home: NextPage = () => {
                 {/* return a link block to dashboard or quests based on user type */}
                 {session.type === "ADMIN" ? (
                   <Link
-                    className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 border border-white p-4 text-white backdrop-blur-lg"
+                    className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
                     href="/admin/dashboard"
                   >
                     <h3 className="text-2xl font-bold">
@@ -47,7 +50,7 @@ const Home: NextPage = () => {
                   </Link>
                 ) : (
                   <Link
-                    className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 border border-white p-4 text-white backdrop-blur-lg"
+                    className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
                     href="/user/quests"
                   >
                     <h3 className="text-2xl font-bold">
@@ -62,7 +65,7 @@ const Home: NextPage = () => {
               </>
             ) : (
               <Link
-                className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 border border-white p-4 text-white backdrop-blur-lg"
+                className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
                 href="/auth/login"
                 target="_blank"
               >
@@ -76,7 +79,7 @@ const Home: NextPage = () => {
               </Link>
             )}
             <Link
-              className="flex max-w-md flex-col gap-4 rounded-xl bg-white/10 border border-white p-4 text-white backdrop-blur-lg"
+              className="flex max-w-md flex-col gap-4 rounded-xl border border-white bg-white/10 p-4 text-white backdrop-blur-lg"
               href="/about"
             >
               <h3 className="text-2xl font-bold">About Us →</h3>

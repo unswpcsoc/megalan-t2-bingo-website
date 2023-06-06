@@ -1,7 +1,7 @@
 import { useState, type SyntheticEvent } from "react";
 import { api } from "~/utils/api";
 
-/*
+/**
  * Form that takes a name as input, validates that an account exists with that name
  * Sends an email with a verification code to that user
  * and returns the name with onChange

@@ -1,13 +1,13 @@
-"use client";
-
 import { type NextPage } from "next";
 import Layout from "../_layout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import AllUserTasks from "~/components/AllUserTasks";
 import NotLoggedIn from "~/components/NotLoggedIn";
-// import NoAdminsAllowed from "~/components/universal/NoAdminsAllowed";
 
+/**
+ * User Dashboard where users can see their completed and incomplete quests
+ */
 const Quests: NextPage = () => {
   const { data: session } = useSession();
   const router = useRouter();

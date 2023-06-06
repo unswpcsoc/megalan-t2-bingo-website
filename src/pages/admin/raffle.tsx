@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { type TaskType } from "@prisma/client";
 import Winner from "~/components/modal/WinnerModal";
 
-const Dashboard: NextPage = () => {
+/**
+ * Page for admins to roll for winners of a category
+ */
+const Raffle: NextPage = () => {
   const [prizeType, setPrizeType] = useState<TaskType | undefined>(undefined);
   const [showWinner, setShowWinner] = useState(false);
 
@@ -12,21 +15,20 @@ const Dashboard: NextPage = () => {
     setShowWinner(true);
   }, [prizeType]);
 
-
-  
-
   return (
     <Layout>
       {/* Winner Modal */}
-      {prizeType? 
-      <Winner
-        show={showWinner}
-        onClose={() => {
-          setShowWinner(false);
-
-        }}
-        category={prizeType}
-      /> : <></>}
+      {prizeType ? (
+        <Winner
+          show={showWinner}
+          onClose={() => {
+            setShowWinner(false);
+          }}
+          category={prizeType}
+        />
+      ) : (
+        <></>
+      )}
 
       <main className="flex min-h-screen flex-col items-center">
         <div className="container mt-6 flex flex-col items-center justify-center gap-8 px-4 py-16 ">
@@ -69,11 +71,10 @@ const Dashboard: NextPage = () => {
           >
             <h3 className="text-2xl font-bold">Society Quests</h3>
           </button>
-
         </div>
       </main>
     </Layout>
   );
 };
 
-export default Dashboard;
+export default Raffle;

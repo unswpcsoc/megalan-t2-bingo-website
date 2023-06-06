@@ -10,6 +10,9 @@ import LoadingSpinner from "~/components/LoadingSpinner";
 import NotLoggedIn from "~/components/NotLoggedIn";
 import NotAdmin from "~/components/notAdmin";
 
+/**
+ * Page to manage societies admins as an admin
+ */
 const Users: NextPage = () => {
   const [showForm, setShowForm] = useState(false);
   const { data: session } = useSession();

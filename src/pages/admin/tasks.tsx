@@ -15,11 +15,12 @@ import AllTasks from "~/components/AllTasks";
 import NotLoggedIn from "~/components/NotLoggedIn";
 import NotAdmin from "~/components/notAdmin";
 
+/**
+ * Displays all the tasks from all of the admins's societies
+ */
 const AdminTasks: NextPage = () => {
   const { data: session } = useSession();
   const [showCreateTask, setShowCreateTask] = useState(false);
-
-  // redundant and hacky way of making the AllTasks component reload
 
   const { data: clubList } = api.quests.getAdminClubs.useQuery({
     userID: session ? session.id : "",

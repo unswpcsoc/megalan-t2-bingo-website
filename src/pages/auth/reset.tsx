@@ -8,6 +8,9 @@ import Link from "next/link";
 import AskNameAndTicketForm from "~/components/forms/AskNameAndTicketForm";
 import { hideEmail } from "~/components/functions/hideEmail";
 
+/**
+ * Page for displaying forms to reset the user's password
+ */
 const Reset: NextPage = () => {
   // STEPS:
   // 1. show ask for name and megaLAN ticket order ID

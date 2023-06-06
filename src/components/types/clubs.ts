@@ -16,8 +16,6 @@ export type ClubNamesType =
   | "SPONSOR"
   | "COSPLAY";
 
-export type CleanClubDataType = { name: ClubNamesType; id: string };
-
 export const ClubNameSchema = z.enum([
   "PCS",
   "ES",
@@ -34,6 +32,8 @@ export const ClubNameSchema = z.enum([
   "SPONSOR",
   "COSPLAY",
 ]);
+
+export type CleanClubDataType = { name: ClubNamesType; id: string };
 
 export const TaskTypeSchema = z.enum(["SOCIETY", "SOCIAL", "COSPLAY"]);
 

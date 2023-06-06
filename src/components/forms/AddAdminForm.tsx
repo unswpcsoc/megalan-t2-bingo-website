@@ -6,7 +6,17 @@ import { api } from "~/utils/api";
 import { ExclamationCircleIcon } from "@heroicons/react/24/solid";
 import UserSearchBarAdmin from "../UserSearchBarAdmin";
 
-const AddAdminForm = ({ sessionId, doClose }: { sessionId: string, doClose: MouseEventHandler }) => {
+/**
+ * Form that takes in a name as an input, and adds member to a society if all
+ * details are valid
+ */
+const AddAdminForm = ({
+  sessionId,
+  doClose,
+}: {
+  sessionId: string;
+  doClose: MouseEventHandler;
+}) => {
   const [userId, setUserId] = useState("");
   const [societyId, setSocietyId] = useState<ClubNamesType | "">("");
   const [validDetails, setValidDetails] = useState(false);
@@ -46,7 +56,7 @@ const AddAdminForm = ({ sessionId, doClose }: { sessionId: string, doClose: Mous
             <h1 className="text-lg">Please Enter All the Details</h1>
           </div>
         )}
-        <div className="flex flex-row items-end justify-end pt-4 space-x-4">
+        <div className="flex flex-row items-end justify-end space-x-4 pt-4">
           <button
             onClick={doClose}
             className="w-fit rounded-xl border border-red-400 bg-red-800/40 px-4 py-2 text-red-400"

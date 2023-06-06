@@ -6,6 +6,9 @@ import { type NextPage } from "next/types";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 
+/**
+ * Standard Login Page
+ */
 const Login: NextPage = () => {
   const [validName, setValidName] = useState(true);
   const [validPassword, setValidPassword] = useState(true);

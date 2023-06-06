@@ -8,6 +8,9 @@ import { type NextPage } from "next/types";
 import { signIn } from "next-auth/react";
 import NameEmailAndTicketForm from "~/components/forms/NameEmailAndTicketForm";
 
+/**
+ * Standard user sign up Page
+ */
 const SignUp: NextPage = () => {
   const router = useRouter();
   // store current user details in state
