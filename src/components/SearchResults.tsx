@@ -8,9 +8,11 @@ const SearchResults = ({searchString, setSearchQuery, setResults, setUserID }: {
 const resultUsers = api.quests.getUsers.useQuery({name: searchString});
   return (
     <div>
+
+      {resultUsers.data?.length === 0 && <> No users found!</>}
       {resultUsers.data?.map((result, index) => (
         <div key={index} className="px-4 py-2 hover:bg-gray-200">
-          <button onClick={() => {
+          <button className="w-full" onClick={() => {
             setSearchQuery(result.name);
             setResults([]);
             setUserID(result.id);
