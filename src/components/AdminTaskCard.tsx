@@ -1,5 +1,8 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 
+/**
+ * Task card for admins to view with delete option
+ */
 const AdminTaskCard = ({
   task,
   showDelete,

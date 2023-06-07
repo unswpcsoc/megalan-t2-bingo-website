@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Layout from "~/pages/_layout";
 
+/**
+ * Warning screen for unauthenticated users trying to access screens which
+ * need authentication
+ */
 const NotLoggedIn = () => {
   return (
     <Layout>

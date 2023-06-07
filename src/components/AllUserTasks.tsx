@@ -2,6 +2,9 @@ import { api } from "~/utils/api";
 import LoadingSpinner from "./LoadingSpinner";
 import UserTaskCard from "./UserTaskCard";
 
+/**
+ * Displays all completed and incomplete tasks of a user
+ */
 const AllUserTasks = ({ userId }: { userId: string }) => {
   // get users tasks
   const { data: taskData } = api.quests.getUserTasks.useQuery({

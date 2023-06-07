@@ -1,3 +1,6 @@
+/**
+ * Generic Loading Spinner
+ */
 const LoadingSpinner = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center">
