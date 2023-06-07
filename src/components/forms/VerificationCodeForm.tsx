@@ -1,6 +1,10 @@
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 
+/**
+ * Form that takes a verification code as input and returns true if if matches
+ * with the code given to it
+ */
 const VerificationCodeForm = ({
   code,
   onChange,

@@ -3,6 +3,10 @@ import { useState } from "react";
 import { type CleanClubDataType, type ClubNamesType } from "../types/clubs";
 import { getSocietyNameType } from "../functions/getSocietyNameType";
 
+/**
+ * Form that takes in task details as input and returns the valid details with
+ * onChange
+ */
 const CreateTaskForm = ({
   onChange,
   clubs,

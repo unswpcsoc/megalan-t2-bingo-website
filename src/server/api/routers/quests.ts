@@ -37,19 +37,8 @@ export const questsRouter = createTRPCRouter({
       return cleanUsers;
     }),
 
-  getUserQuests: protectedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ input, ctx }) => {
-      const user = await ctx.prisma.user.findUnique({
-        where: { id: input.id },
-      });
-      if (!user) return { status: false, message: "User not found" };
-      return {
-        greeting: `Hello ${user.email}`,
-      };
-    }),
-
   // returns the leaderboard data of all PARTICIPANTS
+  // TODO: return the rank with each user object where same rank for same points
   getLeaderboardStats: publicProcedure
     .input(z.object({ userID: z.string() }))
     .query(async ({ input, ctx }) => {
@@ -121,9 +110,6 @@ export const questsRouter = createTRPCRouter({
       // return all the tasks
       return { tasks: allTasks };
     }),
-
-  // society clubname
-  // user id
 
   getUserSocietyCompletedTasks: adminProcedure
     .input(z.object({ userId: z.string(), societyName: ClubNameSchema }))
@@ -275,128 +261,60 @@ export const questsRouter = createTRPCRouter({
 
       return cleanUsers;
     }),
+
   getUserTasks: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .query(async ({ input, ctx }) => {
-
       const userTasks = await ctx.prisma.user.findFirst({
-        where: { id: input.userId},
-        include: {completedTasks: {include: {task: {include: {Society: true}}}}}
+        where: { id: input.userId },
+        include: {
+          completedTasks: { include: { task: { include: { Society: true } } } },
+        },
       });
 
-      const cTasks:string[] = [];
+      const cTasks: string[] = [];
       userTasks?.completedTasks.forEach((task) => {
         cTasks.push(task.taskID);
       });
 
       const incompleteTasks = await ctx.prisma.task.findMany({
-        where: {NOT : {id: {in: cTasks}}},
-        include: {Society: true}
+        where: { NOT: { id: { in: cTasks } } },
+        include: { Society: true },
       });
 
-      const allcompleteTasks: 
-      { name: string; points: number; id: string, societyName: ClubNamesType | undefined }[] =
-      [];
+      const allcompleteTasks: {
+        name: string;
+        points: number;
+        id: string;
+        societyName: ClubNamesType | undefined;
+      }[] = [];
       userTasks?.completedTasks.forEach((task) => {
-        const t = task.task
-        
+        const t = task.task;
+
         allcompleteTasks.push({
           name: t.name,
           points: t.points,
           id: t.id,
-          societyName: t.Society?.name
+          societyName: t.Society?.name,
         });
       });
 
-      const allInCompleteTasks: 
-      { name: string; points: number; id: string, societyName: ClubNamesType | undefined }[] =
-      [];
+      const allInCompleteTasks: {
+        name: string;
+        points: number;
+        id: string;
+        societyName: ClubNamesType | undefined;
+      }[] = [];
 
       incompleteTasks.forEach((task) => {
         allInCompleteTasks.push({
           name: task.name,
           points: task.points,
           id: task.id,
-          societyName: task.Society?.name
+          societyName: task.Society?.name,
         });
       });
 
-      return{incomplete: allInCompleteTasks, complete: allcompleteTasks}
-    /* 
-      const user = await ctx.prisma.user.findFirst({
-        where: {
-          id: input.userId,
-        },
-        include: {
-          completedTasks: true,
-        },
-      });
-
-      // if no user is found throw an error
-      if (!user)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "User not found",
-        });
-
-      // generate query prisma for full task details
-      const completedTasksQuery: { id: string }[] = [];
-      user.completedTasks.forEach((task) => {
-        completedTasksQuery.push({ id: task.taskID });
-      });
-
-      // get all the tasks the user has completed
-
-
-
-
-
-      // get all task objects from with full task details
-      const completedTasks = await ctx.prisma.task.findMany({
-        where: {
-          OR: completedTasksQuery,
-        },
-      });
-
-      // clean data for complete tasks
-      const allcompleteTasks: { name: string; points: number; id: string }[] =
-        [];
-      completedTasks.forEach((task) => {
-        allcompleteTasks.push({
-          name: task.name,
-          points: task.points,
-          id: task.id,
-        });
-      });
-
-      // create a prisma query based on the completed tasks
-      const allTasksQuery: { id: string }[] = [];
-      user.completedTasks.forEach((task) => {
-        allTasksQuery.push({ id: task.taskID });
-      });
-
-      // clean data for incomplete tasks
-      const allIncompleteTasks: { name: string; points: number; id: string }[] =
-        [];
-      // get incomplete tasks as well
-      const tasks = await ctx.prisma.task.findMany({
-        where: {
-          NOT: {
-            OR: allTasksQuery,
-          } 
-        },
-      });
-
-      tasks.forEach((task) => {
-        allIncompleteTasks.push({
-          name: task.name,
-          points: task.points,
-          id: task.id,
-        });
-      });
-      // return the completed and incomplete tasks separately
-      return { incomplete: allIncompleteTasks, complete: allcompleteTasks };
-      */
+      return { incomplete: allInCompleteTasks, complete: allcompleteTasks };
     }),
-    
 });

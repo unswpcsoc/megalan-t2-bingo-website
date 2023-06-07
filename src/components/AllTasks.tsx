@@ -3,6 +3,9 @@ import LoadingSpinner from "./LoadingSpinner";
 import TaskCard from "./AdminTaskCard";
 import { type ClubNamesType } from "./types/clubs";
 
+/**
+ * Displays all tasks of a society of list of societies for admins to view
+ */
 const AllTasks = ({
   showDelete,
   deleteTask,

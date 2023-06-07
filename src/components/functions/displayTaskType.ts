@@ -1,5 +1,6 @@
 import { type TaskType } from "@prisma/client";
 
+// returns the category based on taskType from the database
 export const DisplayTaskType = (category: TaskType) => {
   const data = {
     SOCIAL: "Social Media",
@@ -7,5 +8,4 @@ export const DisplayTaskType = (category: TaskType) => {
     COSPLAY: "Cosplay",
   };
   return data[category];
-
 };

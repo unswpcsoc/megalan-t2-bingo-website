@@ -5,13 +5,16 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import LoadingSpinner from "~/components/LoadingSpinner";
 
+/**
+ * Page that displays the leaderboards, publicly accessible
+ */
 const Leaderboard: NextPage = () => {
   const { data: session } = useSession();
   const [rank, setRank] = useState(-1);
   // api request to retrieve the leaderboard data and user's rank
-  const {data: leaderboards} = api.quests.getLeaderboardStats.useQuery({
-    userID: session ? session.id : "" 
-  })
+  const { data: leaderboards } = api.quests.getLeaderboardStats.useQuery({
+    userID: session ? session.id : "",
+  });
 
   if (leaderboards && leaderboards.userIndex !== -1 && rank === -1) {
     setRank(leaderboards.userIndex);
@@ -26,7 +29,7 @@ const Leaderboard: NextPage = () => {
             Leaderboards 🦈
           </h1>
           {/* Display the user's rank */}
-          {session && (session.type === "PARTICIPANT") &&  (
+          {session && session.type === "PARTICIPANT" && (
             <h1 className="text-4xl font-bold text-white">
               {session.user.name} is ranked #{rank + 1}
             </h1>

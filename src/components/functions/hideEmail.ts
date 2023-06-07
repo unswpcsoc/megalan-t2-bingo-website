@@ -1,3 +1,4 @@
+// returns a hidden version of an email passed in displaying only 3 letters
 export const hideEmail = (email: string) => {
   const len = email.replace(/@.*/, "").length;
   const partialEmail = email.replace(

@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Layout from "~/pages/_layout";
 
+/**
+ * Warning screen for PARTICIPANTS trying to access admin screens
+ */
 const NotAdmin = () => {
   return (
     <Layout>

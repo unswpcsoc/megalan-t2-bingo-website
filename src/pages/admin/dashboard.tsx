@@ -8,6 +8,10 @@ import { type ClubNamesType } from "~/components/types/clubs";
 import NotLoggedIn from "~/components/NotLoggedIn";
 import NotAdmin from "~/components/notAdmin";
 
+/**
+ * Basic admin dashboard which displays which societies they are a part of
+ * and links to other admin pages
+ */
 const AdminDashboard: NextPage = () => {
   const { data: session } = useSession();
 

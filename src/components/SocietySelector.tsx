@@ -3,8 +3,11 @@ import { api } from "~/utils/api";
 import { type ClubNamesType } from "./types/clubs";
 import { getSocietyNameType } from "./functions/getSocietyNameType";
 
+/**
+ * Horizontal scroll to select from societies that an admin is part of
+ */
 const SocietySelector = ({
-sessionId,
+  sessionId,
   setSocietyId,
 }: {
   sessionId: string;
@@ -36,7 +39,7 @@ sessionId,
           (club: { name: ClubNamesType; id: string }, index) => (
             <div
               key={index}
-              className={`m-2 rounded-xl p-4 backdrop-blur-md w-fit h-
+              className={`h- m-2 w-fit rounded-xl p-4 backdrop-blur-md
           ${
             selectedCard === club.id
               ? "border-4 border-green-500 bg-green-900/20 text-green-500 shadow-xl"
