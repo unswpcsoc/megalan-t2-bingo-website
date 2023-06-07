@@ -5,6 +5,7 @@ A Stamp Rally Website Developed for MegaLAN Atlantis during 2023 by @HARI-PRMD a
 ## 🐬 Documentation
 
 You can find documentation on how to use it as an admin here: [Documentation](https://confirmed-smoke-6f8.notion.site/Megalan-Quests-User-Guide-f6784968de434e87aa44e4df6624fab7)
+
 The website is available here: [Website](https://megalan-atlantis-quests.vercel.app/)
 
 ## 🦑 Tech Stack
