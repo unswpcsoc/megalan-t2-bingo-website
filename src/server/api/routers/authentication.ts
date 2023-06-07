@@ -6,9 +6,10 @@ import {
   protectedProcedure,
 } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { SendForgotPasswordEmail } from "./EmailSenderV2";
+import { SendForgotPasswordEmail } from "../../functions/EmailSender";
 
 export const authenticationRouter = createTRPCRouter({
+  // login logic moved to auth.ts, this route is not in use
   login: publicProcedure
     .input(z.object({ name: z.string(), password: z.string() }))
     .mutation(async ({ input, ctx }) => {

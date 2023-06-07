@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { SendVerificationEmail } from "./EmailSenderV2";
+import { SendVerificationEmail } from "../../functions/EmailSender";
 
 export const validateRouter = createTRPCRouter({
   isUserUnique: publicProcedure

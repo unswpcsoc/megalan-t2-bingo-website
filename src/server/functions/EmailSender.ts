@@ -1,11 +1,16 @@
 import sgMail from "@sendgrid/mail";
 import { randomUUID } from "crypto";
 
+/**
+ * Sends an email with a verification code to the user
+ * @param emailId
+ * @param name
+ * @returns { status: boolean, code: string }
+ */
 export const SendVerificationEmail = async (
   emailId: string,
   name: string
 ): Promise<{ status: boolean; code: string }> => {
-
   const API_KEY = process.env.SENDGRID_API_KEY;
   if (!API_KEY) throw new Error("API Key Not Found");
   const verificationCode: string = randomUUID().toString();
@@ -26,14 +31,19 @@ export const SendVerificationEmail = async (
     .catch(() => {
       sendSuccess = false;
     });
-    return { status: sendSuccess, code: verificationCode }
+  return { status: sendSuccess, code: verificationCode };
 };
 
+/**
+ * Sends a verification code as part of the forgot password flow
+ * @param emailId
+ * @param name
+ * @returns { status: boolean, code: string }
+ */
 export const SendForgotPasswordEmail = async (
   emailId: string,
   name: string
-):  Promise<{ status: boolean; code: string }> => {
-
+): Promise<{ status: boolean; code: string }> => {
   const API_KEY = process.env.SENDGRID_API_KEY;
   if (!API_KEY) throw new Error("API Key Not Found");
   const verificationCode: string = randomUUID().toString();
@@ -54,5 +64,5 @@ export const SendForgotPasswordEmail = async (
     .catch(() => {
       sendSuccess = false;
     });
-    return { status: sendSuccess, code: verificationCode }
+  return { status: sendSuccess, code: verificationCode };
 };
