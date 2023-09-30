@@ -103,7 +103,7 @@ const About: NextPage = () => {
           </div>
           <div className="my-4 flex h-fit flex-row space-x-4 rounded-lg bg-white/20 px-4 py-4 drop-shadow-md backdrop-blur-lg sm:space-x-6  sm:px-6">
             <Image
-              src="https://media.discordapp.net/attachments/937254069783892019/1114086695210590208/IMG_2966.jpg?width=671&height=1227"
+              src="https://i.imgur.com/bk0f2UT.jpg"
               alt="hehe-logo"
               height={80}
               width={80}
