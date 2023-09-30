@@ -33,6 +33,7 @@ const config = {
         pathname: "/**",
       },
     ],
+    domains: ["i.imgur.com"],
   },
 };
 export default config;
